@@ -1,0 +1,548 @@
+openapi: 3.0.3
+info:
+  title: Ummarchintah Blog API
+  description: API for managing and accessing blogs and authors for the ummarchintah blog site.
+  version: 1.0.0
+
+servers:
+  - url: https://api.ummarchintah.com/v1
+    description: Production server
+  - url: http://localhost:4000/v1
+    description: Development server
+
+paths:
+  /authors:
+    get:
+      summary: Get a list of authors
+      description: Retrieve all authors with pagination
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthorListResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: 'Create a new author'
+      description: 'Create a new author with the given data'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/SingleAuthorResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /authors/{authorId}:
+    get:
+      summary: Get a single author
+      description: Retrieve a single author by ID
+      parameters:
+        - $ref: '#/components/parameters/AuthorIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/SingleAuthorResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: 'Update an author'
+      description: 'Update an author with the given data'
+      parameters:
+        - $ref: '#/components/parameters/AuthorIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/PutResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: 'Delete an author'
+      description: 'Delete an author with the given id'
+      parameters:
+        - $ref: '#/components/parameters/AuthorIdParam'
+      responses:
+        '204':
+          $ref: '#/components/responses/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /blogs:
+    get:
+      summary: Get a list of blogs
+      description: Retrieve all blogs with pagination and sorting.
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/SortParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/BlogListResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: 'Create a new blog'
+      description: 'Create a new blog with the given data'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogInput'
+      responses:
+        '201':
+          $ref: '#/components/responses/SingleBlogResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /blogs/{blogId}:
+    get:
+      summary: 'Get single blog'
+      description: 'Get the blog data based on Id'
+      parameters:
+        - $ref: '#/components/parameters/BlogIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/SingleBlogResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: 'Update a blog'
+      description: 'Update a blog with the given data'
+      parameters:
+        - $ref: '#/components/parameters/BlogIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogInput'
+      responses:
+        '200':
+          $ref: '#/components/responses/PutResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: 'Delete a blog'
+      description: 'Delete a blog with the given id'
+      parameters:
+        - $ref: '#/components/parameters/BlogIdParam'
+      responses:
+        '204':
+          $ref: '#/components/responses/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /blogs/search:
+    get:
+      summary: 'Search blogs'
+      description: 'Get all blog list according to search text'
+      parameters:
+        - $ref: '#/components/parameters/SearchQueryParam'
+        - $ref: '#/components/parameters/PageParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/BlogListResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /blogs/author/{authorId}:
+    get:
+      summary: "Get author's all blogs"
+      description: Using author id get all the blogs of that author
+      parameters:
+        - $ref: '#/components/parameters/AuthorIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/BlogListResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+  /blogs/view/{blogId}:
+    put:
+      summary: 'Update blog views'
+      description: 'Update the views of a blog'
+      parameters:
+        - $ref: '#/components/parameters/BlogIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/PutResponse'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '403':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  parameters:
+    PageParam:
+      in: query
+      name: page
+      schema:
+        type: integer
+        default: 1
+      description: The page number to retrieve.
+    LimitParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        default: 10
+      description: The number of items per page.
+    SortParam:
+      in: query
+      name: sort
+      schema:
+        type: string
+        enum: [recent, oldest, popular]
+        default: recent
+      description: Sort order for the results.
+    AuthorIdParam:
+      in: path
+      name: authorId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the author.
+    BlogIdParam:
+      in: path
+      name: blogId
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the blog.
+    SearchQueryParam:
+      in: query
+      name: query
+      schema:
+        type: string
+      description: Search query text.
+
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the author
+        name:
+          type: string
+          description: Name of the author
+        image:
+          type: string
+          description: Image link of the author
+
+    AuthorInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the author
+        image:
+          type: string
+          description: Image link of the author
+      required:
+        - name
+
+    Blog:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the blog
+        title:
+          type: string
+          description: Title of the blog
+        content:
+          type: object
+          properties:
+            english:
+              type: string
+              description: Blog content in English
+            bangla:
+              type: string
+              description: Blog content in Bangla
+        dateWritten:
+          type: string
+          format: date
+          description: Date the blog was written
+        readingTime:
+          type: string
+          description: Estimated reading time for the blog
+        keywords:
+          type: array
+          items:
+            type: string
+          description: Keywords associated with the blog
+        originalPostLink:
+          type: string
+          description: Link to the original post
+        authorId:
+          type: string
+          description: ID of the author
+        totalViews:
+          type: integer
+          description: Total views of the blog
+          default: 0
+
+    BlogInput:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: object
+          properties:
+            english:
+              type: string
+            bangla:
+              type: string
+        dateWritten:
+          type: string
+          format: date
+        keywords:
+          type: array
+          items:
+            type: string
+        originalPostLink:
+          type: string
+        authorId:
+          type: string
+      required:
+        - title
+        - content
+        - dateWritten
+        - keywords
+        - authorId
+
+  responses:
+    BlogListResponse:
+      description: A list of blogs
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: /blogs?page=1&limit=10
+                  next:
+                    type: string
+                    example: /blogs?page=2&limit=10
+                  prev:
+                    type: string
+                    example: /blogs?page=1&limit=10
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blog'
+              pagination:
+                type: object
+                properties:
+                  totalPage:
+                    type: integer
+                    example: 20
+                  totalBlogs:
+                    type: integer
+                    example: 200
+
+    SingleBlogResponse:
+      description: A single Blog
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: /blogs/12628732
+                  author:
+                    type: string
+                    example: /authors/3434324234
+              data:
+                $ref: '#/components/schemas/Blog'
+
+    AuthorListResponse:
+      description: A list of authors
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: /authors?page=1&limit=10
+                  next:
+                    type: string
+                  prev:
+                    type: string
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+              pagination:
+                type: object
+                properties:
+                  totalPage:
+                    type: integer
+                    example: 20
+                  totalAuthors:
+                    type: integer
+                    example: 200
+
+    SingleAuthorResponse:
+      description: A single author
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: /authors/1
+              data:
+                $ref: '#/components/schemas/Author'
+
+    ErrorResponse:
+      description: This response will be sent if any error occurs
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              devMessage:
+                type: string
+                description: Detailed message for developers
+                example: 'Invalid input data provided.'
+              clientMessage:
+                type: string
+                description: User-friendly error message for clients
+                example: 'The data you provided is incorrect.'
+              statusCode:
+                type: integer
+                description: HTTP status code
+                example: 400
+              errors:
+                type: array
+                description: List of specific validation or processing errors
+                items:
+                  type: string
+                  example: "The 'email' field is required."
+
+    PutResponse:
+      description: Response for successful PUT request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Success message
+                example: 'Resource updated successfully'
+              data:
+                type: object
+                description: Updated resource data
+              _links:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    example: /blogs/123
+
+    DeleteResponse:
+      description: Response for successful DELETE request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Success message
+                example: 'Resource deleted successfully'
