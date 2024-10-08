@@ -1,3 +1,4 @@
+import { AuthModule } from './modules/auth/auth.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,6 +13,7 @@ import { BlogsModule } from './modules/blogs/blogs.module';
     }),
     SentryModule.forRoot(),
     BlogsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,15 +6,20 @@ import {
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import './config/instrument';
+import { ValidationPipe } from '@nestjs/common';
+import type { FastifyCookieOptions } from '@fastify/cookie';
+import cookie from '@fastify/cookie';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
-
+  app.register(cookie) as FastifyCookieOptions;
+  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  app.setGlobalPrefix('v1');
   await app.listen(3000);
 }
 bootstrap();

@@ -7,8 +7,11 @@ import {
 import { Response, Request } from 'express';
 import * as Sentry from '@sentry/node';
 
-interface CustomHttpExceptionResponse {
-  devMessage?: string;
+interface CustomErrorResponse {
+  message?: string[];
+  error?: string;
+  statusCode?: number;
+  devMessage?: string | object | any[];
   clientMessage?: string;
 }
 
@@ -21,7 +24,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     const trackId = Math.floor(Math.random() * 10000000000); // Generating trackId
-
     // Adding extra context with trackId and request body to Sentry
     Sentry.withScope((scope) => {
       scope.setTag('trackId', trackId.toString()); // Attaching trackId to the Sentry log
@@ -30,8 +32,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
     });
 
     // Check if the exception has the custom response structure
-    const responseBody = exception.getResponse() as CustomHttpExceptionResponse;
+    const responseBody = exception.getResponse() as CustomErrorResponse;
 
+    // Handle validation errors specifically
+    if (status === 400 && Array.isArray(responseBody.message)) {
+      const customValidationResponse = {
+        statusCode: status,
+        clientMessage: 'Validation failed',
+        trackId, // Include trackId in the response to the client
+        devMessage: responseBody,
+      };
+
+      return response.status(status).send(customValidationResponse); // Send the custom validation response
+    }
+
+    // Fallback for other exceptions
     const customResponse = {
       devMessage: responseBody.devMessage || 'Something has gone wrong',
       clientMessage: responseBody.clientMessage || 'Server error',
