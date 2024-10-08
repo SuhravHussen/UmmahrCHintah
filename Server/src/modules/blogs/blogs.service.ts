@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateBlogDto } from './dto/createBlogs.dto';
 import { Blog } from '../../common/interfaces/blog.interface';
+import calculateReadingTime from '../../common/lib/calculateReadingTime';
 
 @Injectable()
 export class BlogsService {
@@ -25,7 +26,7 @@ export class BlogsService {
           ...blogData,
           content: blogData.content,
           totalViews: 0,
-          readingTime: '14 minutes',
+          readingTime: calculateReadingTime(blogData.content.text),
           authorId: newAuthor.id,
         },
       });

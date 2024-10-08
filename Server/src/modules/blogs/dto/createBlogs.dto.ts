@@ -12,7 +12,10 @@ export class CreateBlogDto {
   title: string;
 
   @IsNotEmpty()
-  content: object;
+  content: {
+    text: string;
+    richText: string;
+  };
 
   @IsDateString()
   @IsNotEmpty()
