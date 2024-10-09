@@ -16,15 +16,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CreateBlogDto } from './dto/createBlogs.dto';
-import { Blog } from '../../common/interfaces/blog.interface';
 import { BlogSort } from '../../common/enums/blog.enum';
+import { UpdateBlogDto } from './dto/updateBlog.dto';
 
 // interfaces
-
-interface BlogCreateResponse {
-  _links: object;
-  data: Blog;
-}
 
 @Controller('blogs')
 export class BlogsController {
@@ -54,7 +49,7 @@ export class BlogsController {
   @Post()
   async createBlog(
     @Body() createBlogDto: CreateBlogDto,
-  ): Promise<BlogCreateResponse> {
+  ): Promise<GetSingleBlogResponse> {
     try {
       const blog = await this.blogsService.createBlog(createBlogDto);
 
@@ -98,7 +93,7 @@ export class BlogsController {
   @Put(':blogId')
   async updateBlogById(
     @Param('blogId') blogId: string,
-    @Body() updateData: Partial<Blog>,
+    @Body() updateData: UpdateBlogDto,
   ): Promise<GetSingleBlogResponse> {
     try {
       if (blogId === ':blogId') throw new Error('No blog id found');

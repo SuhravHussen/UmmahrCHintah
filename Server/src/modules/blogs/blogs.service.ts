@@ -8,6 +8,7 @@ import {
 } from '../../common/interfaces/blog.interface';
 import calculateReadingTime from '../../common/lib/calculateReadingTime';
 import { BlogSort } from '../../common/enums/blog.enum';
+import { UpdateBlogDto } from './dto/updateBlog.dto';
 
 @Injectable()
 export class BlogsService {
@@ -148,9 +149,13 @@ export class BlogsService {
 
   async updateBlogById(
     id: string,
-    data: Partial<Blog>,
+    data: UpdateBlogDto,
   ): Promise<GetSingleBlogResponse> {
     try {
+      if (data.hasOwnProperty('id')) {
+        throw new Error('Changing the blog ID is not allowed.');
+      }
+
       const updatedBlog = await this.prisma.blog.update({
         where: { id },
         data, // Update fields based on the provided data
