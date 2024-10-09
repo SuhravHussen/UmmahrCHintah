@@ -179,4 +179,54 @@ export class BlogsService {
       throw new Error(error?.message);
     }
   }
+
+  async getAuthorBlogs(
+    authorId: string,
+    page: number,
+    limit: number,
+  ): Promise<GetAllBlogsResponse> {
+    page = Number(page);
+    limit = Number(limit);
+    try {
+      const offset = (page - 1) * limit;
+
+      // Fetch blogs by authorId with pagination and sorting
+      const blogs = await this.prisma.blog.findMany({
+        skip: offset,
+        take: limit,
+        where: { authorId }, // Filter by authorId
+        include: { author: true }, // Include author details
+      });
+
+      // Get total blog count for this author
+      const totalBlogs = await this.prisma.blog.count({
+        where: { authorId },
+      });
+
+      const totalPage = Math.ceil(totalBlogs / limit);
+
+      const _links = {
+        self: `/authors/${authorId}/blogs?page=${page}&limit=${limit}`,
+        next:
+          page < totalPage
+            ? `/authors/${authorId}/blogs?page=${page + 1}&limit=${limit}`
+            : null,
+        prev:
+          page > 1
+            ? `/authors/${authorId}/blogs?page=${page - 1}&limit=${limit}`
+            : null,
+      };
+
+      return {
+        data: blogs,
+        pagination: {
+          totalPage,
+          totalBlogs,
+        },
+        _links,
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
 }

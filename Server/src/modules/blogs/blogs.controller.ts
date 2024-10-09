@@ -5,10 +5,8 @@ import {
 import { BlogsService } from './blogs.service';
 import {
   Controller,
-  //   Get,
   Post,
   Param,
-  //   Query,
   Body,
   HttpException,
   HttpStatus,
@@ -83,6 +81,7 @@ export class BlogsController {
     @Param('blogId') blogId: string,
   ): Promise<GetSingleBlogResponse> {
     try {
+      if (blogId === ':blogId') throw new Error('No blog id found');
       return await this.blogsService.getBlogById(blogId);
     } catch (error) {
       throw new HttpException(
@@ -102,6 +101,7 @@ export class BlogsController {
     @Body() updateData: Partial<Blog>,
   ): Promise<GetSingleBlogResponse> {
     try {
+      if (blogId === ':blogId') throw new Error('No blog id found');
       return await this.blogsService.updateBlogById(blogId, updateData);
     } catch (error) {
       throw new HttpException(
@@ -120,12 +120,35 @@ export class BlogsController {
     @Param('blogId') blogId: string,
   ): Promise<{ message: string }> {
     try {
+      if (blogId === ':blogId') throw new Error('No blog id found');
       return await this.blogsService.deleteBlogById(blogId);
     } catch (error) {
       throw new HttpException(
         {
           devMessage: error.message,
           clientMessage: 'Failed to delete the blog',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // Get all blogs by author with pagination and sorting
+  @Get('/author/:authorId')
+  async getAuthorBlogs(
+    @Param('authorId') authorId: string,
+    @Query('page') page: number = 1, // Default page = 1
+    @Query('limit') limit: number = 10, // Default limit = 10
+  ): Promise<GetAllBlogsResponse> {
+    try {
+      if (authorId === ':authorId') throw new Error('No author id found');
+      return await this.blogsService.getAuthorBlogs(authorId, page, limit);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage:
+            'Sorry, something went wrong while getting the author’s blogs',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
