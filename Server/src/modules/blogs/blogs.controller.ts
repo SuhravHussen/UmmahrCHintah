@@ -1,3 +1,4 @@
+import { GetAllBlogsResponse } from './../../common/interfaces/blog.interface';
 import { BlogsService } from './blogs.service';
 import {
   Controller,
@@ -8,9 +9,12 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { CreateBlogDto } from './dto/createBlogs.dto';
 import { Blog } from '../../common/interfaces/blog.interface';
+import { BlogSort } from '../../common/enums/blog.enum';
 
 // interfaces
 
@@ -24,23 +28,25 @@ export class BlogsController {
   constructor(private readonly blogsService: BlogsService) {}
 
   // Get a list of blogs with pagination and sorting
-  //   @Get()
-  //   async getBlogs(
-  //     @Query('page') page: number = 1, // Default page to 1
-  //     @Query('limit') limit: number = 10, // Default limit to 10
-  //     @Query('sort') sort: string = 'createdAt', // Default sorting by creation date
-  //   ): Promise<{ blogs: Blog[]; total: number }> {
-  //     try {
-  //       return await this.blogsService.getAllBlogs({ page, limit, sort });
-  //     } catch (error) {
-  //       throw new HttpException(
-  //         'Error retrieving blogs',
-  //         HttpStatus.INTERNAL_SERVER_ERROR,
-  //       );
-  //     }
-  //   }
-
-  // Create a new blog
+  @Get()
+  async getBlogs(
+    @Query('page') page: number = 1, // Default page to 1
+    @Query('limit') limit: number = 10, // Default limit to 10
+    @Query('sort') sort: BlogSort = BlogSort.recent, // Default sorting by creation date
+  ): Promise<GetAllBlogsResponse> {
+    try {
+      return await this.blogsService.getAllBlogs(page, limit, sort);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Sorry! Something wrong in our server',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   @Post()
   async createBlog(

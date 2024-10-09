@@ -9,3 +9,20 @@ export interface Blog {
   authorId: string; // ID of the author
   totalViews: number; // Number of views the blog has received
 }
+
+export interface PaginationLinks {
+  self: string;
+  next: string | null;
+  prev: string | null;
+}
+
+export interface PaginationInfo {
+  totalPage: number;
+  totalBlogs: number;
+}
+
+export interface GetAllBlogsResponse {
+  data: Blog[];
+  pagination: PaginationInfo;
+  links: PaginationLinks;
+}
