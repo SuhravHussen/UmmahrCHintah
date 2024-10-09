@@ -4,6 +4,7 @@ import { CreateBlogDto } from './dto/createBlogs.dto';
 import {
   Blog,
   GetAllBlogsResponse,
+  GetSingleBlogResponse,
 } from '../../common/interfaces/blog.interface';
 import calculateReadingTime from '../../common/lib/calculateReadingTime';
 import { BlogSort } from '../../common/enums/blog.enum';
@@ -85,7 +86,7 @@ export class BlogsService {
       const totalPage = Math.ceil(totalBlogs / limit);
 
       // Build pagination links
-      const links = {
+      const _links = {
         self: `/blogs?page=${page}&limit=${limit}&sort=${sort}`,
         next:
           page < totalPage
@@ -104,7 +105,41 @@ export class BlogsService {
           totalPage,
           totalBlogs,
         },
-        links,
+        _links,
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
+
+  async getBlogById(id: string): Promise<GetSingleBlogResponse> {
+    try {
+      // Fetch the blog by its ID, including the author
+      const blog = await this.prisma.blog.findUnique({
+        where: { id }, // Fetch based on the ID
+        include: {
+          author: true, // Include author details
+        },
+      });
+
+      // If the blog is not found, return null
+      if (!blog) {
+        return {
+          _links: {
+            self: '',
+            author: '',
+          },
+          data: {} as Blog,
+        };
+      }
+
+      // Return the blog data in the specified format
+      return {
+        _links: {
+          self: `/blogs/${blog.id}`, // Blog link
+          author: `/authors/${blog.authorId}`, // Author link
+        },
+        data: blog,
       };
     } catch (error) {
       throw new Error(error?.message);

@@ -1,10 +1,13 @@
-import { GetAllBlogsResponse } from './../../common/interfaces/blog.interface';
+import {
+  GetAllBlogsResponse,
+  GetSingleBlogResponse,
+} from './../../common/interfaces/blog.interface';
 import { BlogsService } from './blogs.service';
 import {
   Controller,
   //   Get,
   Post,
-  //   Param,
+  Param,
   //   Query,
   Body,
   HttpException,
@@ -73,23 +76,20 @@ export class BlogsController {
     }
   }
 
-  //   // Get a single blog by ID
-  //   @Get(':blogId')
-  //   async getBlogById(@Param('blogId') blogId: string): Promise<Blog> {
-  //     try {
-  //       const blog = await this.blogsService.getBlogById(blogId);
-  //       if (!blog) {
-  //         throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
-  //       }
-  //       return blog;
-  //     } catch (error) {
-  //       if (error instanceof HttpException) {
-  //         throw error; // Rethrow known exceptions
-  //       }
-  //       throw new HttpException(
-  //         'Error retrieving blog',
-  //         HttpStatus.INTERNAL_SERVER_ERROR,
-  //       );
-  //     }
-  //   }
+  @Get(':blogId')
+  async getBlogById(
+    @Param('blogId') blogId: string,
+  ): Promise<GetSingleBlogResponse> {
+    try {
+      return await this.blogsService.getBlogById(blogId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Sorry something wrong with getting the blog',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

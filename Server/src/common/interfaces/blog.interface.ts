@@ -24,5 +24,13 @@ export interface PaginationInfo {
 export interface GetAllBlogsResponse {
   data: Blog[];
   pagination: PaginationInfo;
-  links: PaginationLinks;
+  _links: PaginationLinks;
+}
+
+export interface GetSingleBlogResponse {
+  data: Blog;
+  _links: {
+    self: string;
+    author: string;
+  };
 }
