@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { BlogsModule } from './modules/blogs/blogs.module';
-import { AuthorModule } from './author/author.module';
+import { AuthorModule } from './modules/author/author.module';
 
 @Module({
   imports: [
