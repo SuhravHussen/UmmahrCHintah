@@ -31,6 +31,6 @@ export interface GetSingleBlogResponse {
   data: Blog;
   _links: {
     self: string;
-    author: string;
+    author?: string;
   };
 }

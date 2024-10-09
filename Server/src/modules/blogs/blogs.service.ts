@@ -145,4 +145,38 @@ export class BlogsService {
       throw new Error(error?.message);
     }
   }
+
+  async updateBlogById(
+    id: string,
+    data: Partial<Blog>,
+  ): Promise<GetSingleBlogResponse> {
+    try {
+      const updatedBlog = await this.prisma.blog.update({
+        where: { id },
+        data, // Update fields based on the provided data
+      });
+      return {
+        data: updatedBlog,
+        _links: {
+          self: `/blogs/${updatedBlog.id}`,
+        },
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
+
+  // Delete blog by ID
+  async deleteBlogById(id: string): Promise<{ message: string }> {
+    try {
+      await this.prisma.blog.delete({
+        where: { id },
+      });
+      return {
+        message: 'Blog deleted successfully',
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
 }

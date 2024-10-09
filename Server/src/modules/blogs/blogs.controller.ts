@@ -14,6 +14,8 @@ import {
   HttpStatus,
   Get,
   Query,
+  Put,
+  Delete,
 } from '@nestjs/common';
 import { CreateBlogDto } from './dto/createBlogs.dto';
 import { Blog } from '../../common/interfaces/blog.interface';
@@ -87,6 +89,43 @@ export class BlogsController {
         {
           devMessage: error.message,
           clientMessage: 'Sorry something wrong with getting the blog',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // Update blog by ID
+  @Put(':blogId')
+  async updateBlogById(
+    @Param('blogId') blogId: string,
+    @Body() updateData: Partial<Blog>,
+  ): Promise<GetSingleBlogResponse> {
+    try {
+      return await this.blogsService.updateBlogById(blogId, updateData);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Failed to update the blog',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // Delete blog by ID
+  @Delete(':blogId')
+  async deleteBlogById(
+    @Param('blogId') blogId: string,
+  ): Promise<{ message: string }> {
+    try {
+      return await this.blogsService.deleteBlogById(blogId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Failed to delete the blog',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
