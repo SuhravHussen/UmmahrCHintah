@@ -234,4 +234,68 @@ export class BlogsService {
       throw new Error(error?.message);
     }
   }
+
+  async searchBlogs(page: number, query: string): Promise<GetAllBlogsResponse> {
+    page = Number(page);
+    const limit = 10;
+    try {
+      const offset = (page - 1) * limit;
+
+      const blogs = await this.prisma.blog.findMany({
+        skip: offset,
+        take: limit,
+        where: {
+          OR: [
+            {
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+            {
+              content: {
+                path: ['text'],
+                string_contains: query,
+              },
+            },
+            {
+              keywords: {
+                has: query,
+              },
+            },
+          ],
+        },
+        include: {
+          author: true,
+        },
+      });
+
+      const totalBlogs = blogs.length;
+
+      // Calculate total pages
+      const totalPage = Math.ceil(totalBlogs / limit);
+
+      // Build pagination links
+      const _links = {
+        self: `/blogs/search?query=${query}&page=${page}`,
+        next:
+          page < totalPage
+            ? `/blogs/search?query=${query}&page=${page + 1}`
+            : null,
+        prev: page > 1 ? `/blogs/search?query=${query}&page=${page - 1}` : null,
+      };
+
+      // Return the paginated search results, pagination info, and links
+      return {
+        data: blogs,
+        pagination: {
+          totalPage,
+          totalBlogs,
+        },
+        _links,
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
 }

@@ -40,7 +40,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         statusCode: status,
         clientMessage: 'Validation failed',
         trackId, // Include trackId in the response to the client
-        devMessage: responseBody,
+        devMessage: responseBody.message.join(', '),
       };
 
       return response.status(status).send(customValidationResponse); // Send the custom validation response

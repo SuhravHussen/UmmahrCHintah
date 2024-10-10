@@ -128,7 +128,6 @@ export class BlogsController {
     }
   }
 
-  // Get all blogs by author with pagination and sorting
   @Get('/author/:authorId')
   async getAuthorBlogs(
     @Param('authorId') authorId: string,
@@ -138,6 +137,26 @@ export class BlogsController {
     try {
       if (authorId === ':authorId') throw new Error('No author id found');
       return await this.blogsService.getAuthorBlogs(authorId, page, limit);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage:
+            'Sorry, something went wrong while getting the author’s blogs',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('/search')
+  async getSearchedBlogs(
+    @Query('page') page: number = 1,
+    @Query('query') query: string = ' ',
+  ): Promise<GetAllBlogsResponse> {
+    try {
+      if (query === ' ') throw new Error('No  query found');
+      return await this.blogsService.searchBlogs(page, query);
     } catch (error) {
       throw new HttpException(
         {
