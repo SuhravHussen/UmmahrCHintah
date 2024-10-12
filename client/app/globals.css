@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .link-active {
+    color: hsl(var(--link-active)); /* Apply the active link color */
+  }
+  .link-inactive {
+    color: hsl(var(--link-inactive)); /* Inactive link color */
+  }
+  .bg-card-hover {
+    background-color: hsl(var(--bg-card-hover));
+  }
+}
+
+@layer base {
+  :root {
+    --background: 48 100% 95%;
+    --foreground: 48 5% 0%;
+    --card: 48 60% 90%;
+    --card-foreground: 48 5% 10%;
+    --popover: 48 100% 95%;
+    --popover-foreground: 48 100% 0%;
+    --primary: 48 11% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 48 30% 70%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 10 30% 85%;
+    --muted-foreground: 48 5% 35%;
+    --accent: 10 30% 80%;
+    --accent-foreground: 48 5% 10%;
+    --destructive: 0 100% 30%;
+    --destructive-foreground: 48 5% 90%;
+    --border: 48 30% 50%;
+    --input: 48 30% 18%;
+    --ring: 48 11% 44%;
+    --radius: 0.5rem;
+    /* main theme ends */
+    --link-active: 215 27.9% 16.9%;
+    --link-inactive: 0 0% 40%;
+    --bg-card-hover: 48 100% 96.1%;
+  }
+  .dark {
+    --background: 221 50% 10%;
+    --foreground: 221 5% 90%;
+    --card: 221 50% 10%;
+    --card-foreground: 221 5% 90%;
+    --popover: 221 50% 5%;
+    --popover-foreground: 221 5% 90%;
+    --primary: 221 45% 33%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 221 30% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 183 30% 25%;
+    --muted-foreground: 221 5% 60%;
+    --accent: 183 30% 25%;
+    --accent-foreground: 221 5% 90%;
+    --destructive: 0 100% 30%;
+    --destructive-foreground: 221 5% 90%;
+    --border: 221 30% 26%;
+    --input: 221 30% 26%;
+    --ring: 221 45% 33%;
+    --radius: 0.5rem;
+    /* main theme ends */
+    --link-active: 0 0% 100%;
+    --link-inactive: 0 0% 60%;
+    --bg-card-hover: 243.8 47.1% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
