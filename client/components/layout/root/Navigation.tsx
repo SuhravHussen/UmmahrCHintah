@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between mt-2 md:mt-6">
-      <div className="flex gap-3 md:gap-6 sm:text-lg md:text-2xl  font-medium">
+      <div className="flex gap-4 md:gap-6 sm:text-lg md:text-2xl  font-medium">
         <Link
           href="/"
           className={`${
@@ -33,6 +33,14 @@ export default function Header() {
           } hover:link-active `}
         >
           Authors
+        </Link>
+        <Link
+          href="/authors"
+          className={`${
+            pathname === "/authors" ? "link-active " : "link-inactive"
+          } hover:link-active `}
+        >
+          Login
         </Link>
       </div>
 

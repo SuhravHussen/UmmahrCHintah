@@ -5,6 +5,7 @@ import ArticleList from "@/components/articles/ArticleList";
 import { PaginationComponent } from "@/components/common/Pagination";
 
 import { SelectComponent } from "@/components/common/Select";
+import ArticleCardSkeleton from "@/components/common/article/ArticleCardSkeleton";
 
 export default async function Page({
   searchParams,
@@ -16,7 +17,7 @@ export default async function Page({
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
-
+  const totalPage = 1;
   const sortings = [
     {
       label: "recent",
@@ -55,6 +56,16 @@ export default async function Page({
     },
   ];
 
+  const ArticlesLoader = () => {
+    return (
+      <div className="flex flex-col gap-4">
+        {Array.from({ length: 5 }, (_, index) => (
+          <ArticleCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="mt-16">
       <h1 className={`${primaryFont.className} text-5xl text-center `}>
@@ -78,16 +89,18 @@ export default async function Page({
         </div>
       </div>
 
-      <Suspense key={query + currentPage} fallback={"LOADING"}>
+      <Suspense key={query + currentPage} fallback={<ArticlesLoader />}>
         <ArticleList query={query} currentPage={currentPage} />
 
-        <div className="mt-8 mb-8">
-          <PaginationComponent
-            totalPage={100}
-            currentPage={currentPage}
-            query={query}
-          />
-        </div>
+        {totalPage > 1 && (
+          <div className="mt-8 mb-8">
+            <PaginationComponent
+              totalPage={100}
+              currentPage={currentPage}
+              query={query}
+            />
+          </div>
+        )}
       </Suspense>
     </div>
   );
