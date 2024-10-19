@@ -133,6 +133,13 @@ export class AuthorService {
   // Delete an author
   async deleteAuthor(authorId: string): Promise<{ message: string }> {
     try {
+      // First, delete the blogs linked to the author
+      await this.prisma.blog.deleteMany({
+        where: {
+          authorId: authorId,
+        },
+      });
+
       await this.prisma.author.delete({
         where: { id: authorId },
       });

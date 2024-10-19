@@ -14,10 +14,14 @@ import {
   Query,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateBlogDto } from './dto/createBlogs.dto';
 import { BlogSort } from '../../common/enums/blog.enum';
 import { UpdateBlogDto } from './dto/updateBlog.dto';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { AuthGuard } from '../../common/guards/auth.guard';
+import { RolesGuard } from '../../common/guards/role.guard';
 
 // interfaces
 
@@ -46,6 +50,9 @@ export class BlogsController {
     }
   }
 
+  @Roles(['moderator'])
+  @UseGuards(AuthGuard)
+  // @UseGuards(RolesGuard)
   @Post()
   async createBlog(
     @Body() createBlogDto: CreateBlogDto,
@@ -89,6 +96,9 @@ export class BlogsController {
     }
   }
 
+  @Roles(['moderator'])
+  @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   // Update blog by ID
   @Put(':blogId')
   async updateBlogById(
@@ -109,6 +119,9 @@ export class BlogsController {
     }
   }
 
+  @Roles(['admin'])
+  @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   // Delete blog by ID
   @Delete(':blogId')
   async deleteBlogById(
@@ -148,15 +161,16 @@ export class BlogsController {
       );
     }
   }
-
+  cm2cukv7c0000fc5amff6eby4;
   @Get('/search')
   async getSearchedBlogs(
     @Query('page') page: number = 1,
-    @Query('query') query: string = ' ',
+    @Query('query') query: string = '',
+    @Query('limit') limit: number,
+    @Query('sort') sort: BlogSort = BlogSort.recent,
   ): Promise<GetAllBlogsResponse> {
     try {
-      if (query === ' ') throw new Error('No  query found');
-      return await this.blogsService.searchBlogs(page, query);
+      return await this.blogsService.searchBlogs(page, query, limit, sort);
     } catch (error) {
       throw new HttpException(
         {

@@ -15,6 +15,13 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+
+  app.enableCors({
+    origin: ['http://localhost:3001', 'https://ummahrchintah.vercel.app'],
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: '*',
+    credentials: true,
+  });
   app.register(cookie) as FastifyCookieOptions;
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());

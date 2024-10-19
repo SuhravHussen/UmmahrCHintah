@@ -1,15 +1,23 @@
-"use server";
+import { GetAllArticleResponse } from "@/interfaces/Article.interface";
+import { emptyArticleListResponse } from "@/lib/emptyresponse";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getArticles(query: string, page: number): Promise<any[]> {
-  console.log(query, page);
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+export async function getArticles(
+  query: string,
+  page: number,
+  sort: "recent" | "oldest" | "views",
+  limit: number = 10
+): Promise<GetAllArticleResponse> {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const response = await fetch(
+      `${process.env.API_BASE_URL}/blogs/search?query=${query}&page=${page}&sort=${sort}&limit=${limit}`,
+      { cache: "no-store" }
+    );
+
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
-    throw error;
+    return emptyArticleListResponse;
   }
 }

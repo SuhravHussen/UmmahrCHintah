@@ -20,6 +20,52 @@ body {
   .bg-card-hover {
     background-color: hsl(var(--bg-card-hover));
   }
+  .toolbar-bg {
+    background-color: hsl(var(--background));
+  }
+  /* blog contents */
+
+  .blog-content > * {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  /* .blog-content p:empty {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 20px;
+  } */
+
+  .blog-content h1 {
+    font-size: 32px;
+  }
+  .blog-content h2 {
+    font-size: 24px;
+  }
+  .blog-content h3 {
+    font-size: 20px;
+  }
+
+  .blog-content mark {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px;
+    border-radius: 5%; /* Dark green text */
+  }
+
+  .blog-content blockquote {
+    font-size: 1em;
+    font-family: Open Sans;
+    font-style: italic;
+    color: var(--blockquote-text);
+    padding: 1.2em 30px 1.2em 20px;
+    border-left: 8px solid #78c0a8;
+    line-height: 1.6;
+  }
+  .blog-content hr {
+    border: 0;
+    height: 1px;
+    background-image: var(--hr-color);
+  }
 }
 
 @layer base {
@@ -48,6 +94,16 @@ body {
     --link-active: 215 27.9% 16.9%;
     --link-inactive: 0 0% 40%;
     --bg-card-hover: 48 100% 96.1%;
+    --toolbar-button-active: 215 27.9% 16.9%;
+
+    /* blog content */
+    --blockquote-text: #414141;
+    --hr-color: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0)
+    );
   }
   .dark {
     --background: 221 50% 10%;
@@ -74,6 +130,16 @@ body {
     --link-active: 0 0% 100%;
     --link-inactive: 0 0% 60%;
     --bg-card-hover: 243.8 47.1% 20%;
+    --toolbar-button-active: 48 11% 44%;
+
+    /* blog content */
+    --blockquote-text: #ffffff;
+    --hr-color: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0)
+    );
   }
 }
 

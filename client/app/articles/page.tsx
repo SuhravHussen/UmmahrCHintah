@@ -2,10 +2,12 @@ import SearchBar from "@/components/common/article/SearchBar";
 import { Suspense } from "react";
 import { primaryFont } from "@/lib/fonts";
 import ArticleList from "@/components/articles/ArticleList";
-import { PaginationComponent } from "@/components/common/Pagination";
 
 import { SelectComponent } from "@/components/common/Select";
 import ArticleCardSkeleton from "@/components/common/article/ArticleCardSkeleton";
+import getToken from "@/actions/getAccessToken";
+
+export const dynamic = "force-dynamic";
 
 export default async function Page({
   searchParams,
@@ -13,11 +15,12 @@ export default async function Page({
   searchParams?: {
     query?: string;
     page?: string;
+    sort?: "recent" | "oldest" | "views";
   };
 }) {
   const query = searchParams?.query || "";
+  const sort = searchParams?.sort || "recent";
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPage = 1;
   const sortings = [
     {
       label: "recent",
@@ -29,32 +32,32 @@ export default async function Page({
     },
     {
       label: "most viewed",
-      value: "popular",
+      value: "views",
     },
   ];
 
-  const perPage = [
-    {
-      label: "10 articles",
-      value: "10",
-    },
-    {
-      label: "15 articles",
-      value: "15",
-    },
-    {
-      label: "20 articles",
-      value: "20",
-    },
-    {
-      label: "25 articles",
-      value: "25",
-    },
-    {
-      label: "50 articles",
-      value: "50",
-    },
-  ];
+  // const perPage = [
+  //   {
+  //     label: "10 articles",
+  //     value: "10",
+  //   },
+  //   {
+  //     label: "15 articles",
+  //     value: "15",
+  //   },
+  //   {
+  //     label: "20 articles",
+  //     value: "20",
+  //   },
+  //   {
+  //     label: "25 articles",
+  //     value: "25",
+  //   },
+  //   {
+  //     label: "50 articles",
+  //     value: "50",
+  //   },
+  // ];
 
   const ArticlesLoader = () => {
     return (
@@ -81,26 +84,16 @@ export default async function Page({
             queryParam="sort"
           />
 
-          <SelectComponent
+          {/* <SelectComponent
             items={perPage}
             placeholder="Select articles per page"
             queryParam="limit"
-          />
+          /> */}
         </div>
       </div>
 
       <Suspense key={query + currentPage} fallback={<ArticlesLoader />}>
-        <ArticleList query={query} currentPage={currentPage} />
-
-        {totalPage > 1 && (
-          <div className="mt-8 mb-8">
-            <PaginationComponent
-              totalPage={100}
-              currentPage={currentPage}
-              query={query}
-            />
-          </div>
-        )}
+        <ArticleList query={query} currentPage={currentPage} sort={sort} />
       </Suspense>
     </div>
   );

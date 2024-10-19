@@ -4,6 +4,8 @@ import { geistMono, geistSans } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navigation from "@/components/layout/root/Navigation";
 import Footer from "@/components/layout/root/Footer";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,13 +22,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class">
-          <main className="max-w-5xl mx-auto p-4">
-            <Navigation />
-            {children}
-            <Footer />
-          </main>
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider attribute="class">
+            <Toaster />
+            <main className="max-w-5xl mx-auto p-4">
+              <Navigation />
+              {children}
+              <Footer />
+            </main>
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );

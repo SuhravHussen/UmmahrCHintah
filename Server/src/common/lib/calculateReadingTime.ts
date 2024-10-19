@@ -1,7 +1,7 @@
 function calculateReadingTime(content: string): string {
   const wordsPerMinute = 200;
   const words = content.split(' ').length;
-  const minutes = words / wordsPerMinute;
+  const minutes = Math.ceil(words / wordsPerMinute);
   return formatMinutes(minutes);
 }
 

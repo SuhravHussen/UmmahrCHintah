@@ -1,7 +1,10 @@
 import { Controller, Res, Get, Req, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+
+import { AuthGuard } from '../../common/guards/auth.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { RolesGuard } from '../../common/guards/role.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +30,9 @@ export class AuthController {
   //     .send({ message: 'Token generated and sent as cookie' });
   // }
 
+  @Roles(['admin'])
   @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   @Get('getRoleFromToken')
   async getRoleFromToken(
     @Req() request: FastifyRequest,

@@ -20,20 +20,11 @@ export class BlogsService {
 
   async createBlog(blogData: CreateBlogDto): Promise<Blog> {
     try {
-      const newAuthor = await this.prisma.author.create({
-        data: {
-          name: 'John Doe',
-          image: 'https://example.com/john.jpg',
-        },
-      });
-
       return await this.prisma.blog.create({
         data: {
           ...blogData,
-          content: blogData.content,
           totalViews: 0,
           readingTime: calculateReadingTime(blogData.content.text),
-          authorId: newAuthor.id,
         },
       });
     } catch (error) {
@@ -235,11 +226,32 @@ export class BlogsService {
     }
   }
 
-  async searchBlogs(page: number, query: string): Promise<GetAllBlogsResponse> {
+  async searchBlogs(
+    page: number,
+    query: string,
+    limit: number = 10,
+    sort: BlogSort,
+  ): Promise<GetAllBlogsResponse> {
     page = Number(page);
-    const limit = 10;
+    limit = Number(limit);
     try {
       const offset = (page - 1) * limit;
+
+      let orderBy: any;
+      switch (sort) {
+        case BlogSort.recent:
+          orderBy = { dateWritten: 'desc' }; // Most recent blogs
+          break;
+        case BlogSort.oldest:
+          orderBy = { dateWritten: 'asc' }; // Oldest blogs
+          break;
+        case BlogSort.views:
+          orderBy = { totalViews: 'desc' }; // Blogs with most views
+          break;
+        default:
+          orderBy = { dateWritten: 'desc' }; // Default to most recent if no valid sort is provided
+          break;
+      }
 
       const blogs = await this.prisma.blog.findMany({
         skip: offset,
@@ -265,24 +277,56 @@ export class BlogsService {
             },
           ],
         },
+        orderBy,
         include: {
           author: true,
         },
       });
 
-      const totalBlogs = blogs.length;
+      const totalBlogs = await this.prisma.blog.count({
+        where: {
+          OR: [
+            {
+              title: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+            {
+              content: {
+                path: ['text'],
+                string_contains: query,
+              },
+            },
+            {
+              keywords: {
+                has: query,
+              },
+            },
+          ],
+        },
+      });
 
       // Calculate total pages
       const totalPage = Math.ceil(totalBlogs / limit);
 
       // Build pagination links
       const _links = {
-        self: `/blogs/search?query=${query}&page=${page}`,
+        self: query
+          ? `/blogs/search?query=${query}&page=${page}&limit=${limit}`
+          : `/blogs/search?page=${page}&limit=${limit}`,
         next:
           page < totalPage
-            ? `/blogs/search?query=${query}&page=${page + 1}`
+            ? query
+              ? `/blogs/search?query=${query}&page=${page + 1}&limit=${limit}`
+              : `/blogs/search?page=${page + 1}&limit=${limit}`
             : null,
-        prev: page > 1 ? `/blogs/search?query=${query}&page=${page - 1}` : null,
+        prev:
+          page > 1
+            ? query
+              ? `/blogs/search?query=${query}&page=${page - 1}&limit=${limit}`
+              : `/blogs/search?page=${page - 1}&limit=${limit}`
+            : null,
       };
 
       // Return the paginated search results, pagination info, and links

@@ -15,9 +15,13 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/createAuthor.dto';
 import { UpdateAuthorDto } from './dto/updateAuthor.dto';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { AuthGuard } from '../../common/guards/auth.guard';
+import { RolesGuard } from '../../common/guards/role.guard';
 
 @Controller('authors')
 export class AuthorController {
@@ -58,7 +62,9 @@ export class AuthorController {
       );
     }
   }
-
+  @Roles(['moderator'])
+  @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   @Post()
   async addAuthor(
     @Body() createAuthorDto: CreateAuthorDto,
@@ -76,6 +82,9 @@ export class AuthorController {
     }
   }
 
+  @Roles(['moderator'])
+  @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   @Put(':authorId')
   async updateAuthor(
     @Param('authorId') authorId: string,
@@ -100,6 +109,9 @@ export class AuthorController {
     }
   }
 
+  @Roles(['admin'])
+  @UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
   @Delete(':authorId')
   async deleteAuthor(
     @Param('authorId') authorId: string,

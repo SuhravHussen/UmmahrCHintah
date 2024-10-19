@@ -1,7 +1,13 @@
 import PopularArticles from "@/components/home/PopularArticles";
+import PopularArticleSkeleton from "@/components/home/PopularArticleSkeleton";
 import RecentArticles from "@/components/home/RecentArticles";
+import RecentArticleSkeleton from "@/components/home/RecentArticleSkeleton";
+
 import { Separator } from "@/components/ui/separator";
 import { primaryFont, secondaryFont } from "@/lib/fonts";
+import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
@@ -17,8 +23,12 @@ export default function Home() {
         পারেন।
       </p>
       <Separator />
-      <PopularArticles />
-      <RecentArticles />
+      <Suspense fallback={<PopularArticleSkeleton />}>
+        <PopularArticles />
+      </Suspense>
+      <Suspense fallback={<RecentArticleSkeleton />}>
+        <RecentArticles />
+      </Suspense>
     </div>
   );
 }

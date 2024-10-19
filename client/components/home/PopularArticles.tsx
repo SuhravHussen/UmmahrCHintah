@@ -14,9 +14,16 @@ export default async function PopularArticles() {
         জনপ্রিয় প্রবন্ধসমূহ <Feather />
       </h1>
       <div className="flex flex-col gap-4 mt-4">
-        {data.slice(0, 6).map((article) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
+        {data.data.length > 0 &&
+          data.data.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
+
+        {data.data.length === 0 && (
+          <p className="text-center p-16">
+            দুঃখিত, জনপ্রিয় নিবন্ধগুলো খুঁজে পাওয়া যায়নি।
+          </p>
+        )}
       </div>
     </div>
   );

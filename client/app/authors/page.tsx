@@ -1,8 +1,10 @@
 import AuthorList from "@/components/authors/AuthorList";
 import AuthorCardSkeleton from "@/components/common/author/AuthorCardSkeleton";
-import { PaginationComponent } from "@/components/common/Pagination";
+
 import { primaryFont } from "@/lib/fonts";
 import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default function Page({
   searchParams,
@@ -12,11 +14,10 @@ export default function Page({
   };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPage = 100;
 
   const AuthorsLoader = () => {
     return (
-      <div className="flex flex-wrap gap-2 mt-10 justify-center">
+      <div className="flex flex-wrap gap-2 mt-10 justify-between">
         {Array.from({ length: 5 }, (_, index) => (
           <AuthorCardSkeleton key={index} />
         ))}
@@ -32,16 +33,6 @@ export default function Page({
 
       <Suspense key={currentPage} fallback={<AuthorsLoader />}>
         <AuthorList currentPage={currentPage} />
-
-        {totalPage > 1 && (
-          <div className="mt-8 mb-8">
-            <PaginationComponent
-              totalPage={100}
-              currentPage={currentPage}
-              query={""}
-            />
-          </div>
-        )}
       </Suspense>
     </div>
   );

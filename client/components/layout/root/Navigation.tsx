@@ -1,11 +1,14 @@
 "use client";
 
 import ThemeToggle from "@/components/toggle-theme";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ProfileDropDown } from "./ProfileDropDown";
 
 export default function Header() {
   const pathname = usePathname();
+  const { user } = useUser();
 
   return (
     <header className="flex items-center justify-between mt-2 md:mt-6">
@@ -34,14 +37,13 @@ export default function Header() {
         >
           Authors
         </Link>
-        <Link
-          href="/authors"
-          className={`${
-            pathname === "/authors" ? "link-active " : "link-inactive"
-          } hover:link-active `}
-        >
-          Login
-        </Link>
+        {user ? (
+          <ProfileDropDown />
+        ) : (
+          <Link href="/api/auth/login" className={`hover:link-active`}>
+            Login
+          </Link>
+        )}
       </div>
 
       <div>

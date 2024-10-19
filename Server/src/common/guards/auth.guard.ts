@@ -1,3 +1,4 @@
+import { FastifyRequest } from 'fastify';
 import {
   Injectable,
   CanActivate,
@@ -5,10 +6,9 @@ import {
   HttpException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
+
 import * as jwt from 'jsonwebtoken';
 import * as jwksRsa from 'jwks-rsa';
-import { promisify } from 'util';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,8 +17,7 @@ export class AuthGuard implements CanActivate {
   constructor() {
     // Configure the JWKS Client to point to Auth0 JWKS URI
     this.jwksClient = jwksRsa({
-      jwksUri:
-        'https://dev-4mkdqwt1k7tgzw1q.us.auth0.com/.well-known/jwks.json', // Update with your Auth0 domain
+      jwksUri: `${process.env.AUTH0_API}/.well-known/jwks.json`, // Update with your Auth0 domain
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
@@ -26,7 +25,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request: Request = context.switchToHttp().getRequest();
+    const request: FastifyRequest = context.switchToHttp().getRequest();
 
     // Step 1: Extract token
     const token = this.extractTokenFromHeader(request);
@@ -45,7 +44,8 @@ export class AuthGuard implements CanActivate {
     try {
       const decodedToken = await this.verifyToken(token);
       // Attach the decoded token (user info) to the request object for further use
-      request['user'] = decodedToken;
+      if (!decodedToken) throw new Error('unauthorized');
+
       return true;
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ export class AuthGuard implements CanActivate {
   }
 
   // Step 1: Extract JWT from the Authorization header
-  private extractTokenFromHeader(request: Request): string | null {
+  private extractTokenFromHeader(request: FastifyRequest): string | null {
     const authHeader = request.headers.authorization;
     if (!authHeader) return null;
 
@@ -73,19 +73,21 @@ export class AuthGuard implements CanActivate {
   private async verifyToken(token: string): Promise<any> {
     // Decode token to get the "kid" (key ID)
     const decodedToken: any = jwt.decode(token, { complete: true });
-    console.log(decodedToken);
+
     if (!decodedToken) throw new UnauthorizedException('Invalid token format');
 
     // Fetch the signing key from Auth0 using "kid"
-    const getKey = promisify(this.jwksClient.getSigningKey);
-    const key = await getKey(decodedToken.header.kid);
+    const key = await this.jwksClient.getSigningKey(decodedToken.header.kid);
+
     const publicKey = key.getPublicKey();
 
     // Verify the token with the public key
-    return jwt.verify(token, publicKey, {
+    const verified = jwt.verify(token, publicKey, {
       algorithms: ['RS256'],
       audience: decodedToken.payload.aud, // Your API audience
       issuer: decodedToken.payload.iss, // Your Auth0 domain
     });
+
+    return verified;
   }
 }

@@ -32,7 +32,6 @@ export class UpdateBlogDto {
 
   @IsOptional() // Making this field optional for updates
   @IsString()
-  @IsNotEmpty()
   originalPostLink?: string;
 
   @IsOptional()
