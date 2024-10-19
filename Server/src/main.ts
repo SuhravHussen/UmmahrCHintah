@@ -27,6 +27,10 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.setGlobalPrefix('v1');
-  await app.listen(3000);
+
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${port}`);
+  });
 }
 bootstrap();
