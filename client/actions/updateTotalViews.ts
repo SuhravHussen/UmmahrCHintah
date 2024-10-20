@@ -4,7 +4,7 @@ import { emptyArticleResponse } from "@/lib/emptyresponse";
 
 const updateTotalViews = async (id: string) => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/authors/${id}`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/blogs/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

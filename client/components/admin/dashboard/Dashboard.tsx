@@ -8,12 +8,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect } from "react";
 import InfoCard from "./Card";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import getTotalCounts from "@/actions/getTotalCounts";
+import useAsync from "@/hooks/useAsync";
 
 export default function Dashboard() {
+  const getCounts: () => Promise<{
+    totalBlogs: number;
+    totalAuthors: number;
+  }> = async () => {
+    return await getTotalCounts();
+  };
+  const { data, execute: getTotalNumber } = useAsync<
+    {
+      totalBlogs: number;
+      totalAuthors: number;
+    },
+    []
+  >(getCounts);
+
+  useEffect(() => {
+    getTotalNumber();
+  }, []);
+
   return (
     <Card>
       <CardHeader>
@@ -25,8 +44,14 @@ export default function Dashboard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center gap-4">
-        <InfoCard title="Total articles" info="70" />
-        <InfoCard title="Total authors" info="7" />
+        <InfoCard
+          title="Total articles"
+          info={data?.totalBlogs + " articles"}
+        />
+        <InfoCard
+          title="Total authors"
+          info={data?.totalAuthors + " authors"}
+        />
       </CardContent>
 
       <CardFooter>
