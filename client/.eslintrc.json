@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "no-empty-object": "0"
+    "no-empty-object": 0
   }
 }
