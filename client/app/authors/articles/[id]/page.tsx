@@ -19,8 +19,8 @@ export default async function page({
   const param = params.id.split("-");
 
   const id = param.pop() || " ";
-  const name = param.pop() ? decodeURIComponent(param.pop() || " ") : "";
-
+  let name = param.pop() || "";
+  name = decodeURIComponent(name);
   const currentPage = Number(searchParams?.page) || 1;
 
   const ArticlesLoader = () => {
@@ -35,7 +35,7 @@ export default async function page({
 
   return (
     <div className="mt-16">
-      <h1 className={`${primaryFont.className} text-5xl text-center `}>
+      <h1 className={`${primaryFont.className} text-5xl text-center font-bold`}>
         {name.replace(/%20/g, " ")} এর আর্টিকেল সমুহ
       </h1>
       <Suspense key={currentPage} fallback={<ArticlesLoader />}>

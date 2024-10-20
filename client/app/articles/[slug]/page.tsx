@@ -26,6 +26,7 @@ export default async function page({ params }: { params: { slug: string } }) {
       author={blog.author.name}
       keywords={blog.keywords}
       readingTime={blog.readingTime}
+      originalPostLink={blog.originalPostLink || ""}
     />
   );
 }

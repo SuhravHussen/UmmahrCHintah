@@ -6,7 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { IArticle } from "@/interfaces/Article.interface";
-import { Clock9, Eye, Feather } from "lucide-react";
+import { convertToLocalBangladeshTime } from "@/lib/convertTime";
+import { CalendarIcon, Clock9, Eye, Feather } from "lucide-react";
 import Link from "next/link";
 
 export default function ArticleCard({ article }: { article: IArticle }) {
@@ -28,8 +29,14 @@ export default function ArticleCard({ article }: { article: IArticle }) {
               <Eye size={15} /> {article.totalViews}
             </p>
           </div>
-          <p className="flex text-sm items-center gap-2 mt-3">
-            <Feather size={15} /> {article.author.name}
+          <p className="flex text-sm items-center gap-2 mt-3 justify-between  w-full">
+            <div className="flex text-sm items-center gap-2 ">
+              <Feather size={15} /> {article.author.name}
+            </div>
+            <div className="flex items-center  justify-center">
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              <p>{convertToLocalBangladeshTime(article.dateWritten)}</p>
+            </div>
           </p>
         </CardFooter>
       </Card>

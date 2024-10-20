@@ -6,9 +6,6 @@ const updateTotalViews = async (id: string) => {
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/blogs/${id}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
 
     const articleData = await response.json();
