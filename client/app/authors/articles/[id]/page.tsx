@@ -19,7 +19,7 @@ export default async function page({
   const param = params.id.split("-");
 
   const id = param.pop() || " ";
-  const name = param.pop() || "";
+  const name = param.pop() ? decodeURIComponent(param.pop() || " ") : "";
 
   const currentPage = Number(searchParams?.page) || 1;
 
