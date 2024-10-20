@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { AuthorModule } from './modules/author/author.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthorModule } from './modules/author/author.module';
     BlogsModule,
     AuthModule,
     AuthorModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -141,6 +141,24 @@ export class BlogsController {
     }
   }
 
+  @Post(':blogId')
+  async updateTotalViewById(
+    @Param('blogId') blogId: string,
+  ): Promise<GetSingleBlogResponse> {
+    try {
+      if (blogId === ':blogId') throw new Error('No blog id found');
+      return await this.blogsService.updateTotalViews(blogId);
+    } catch (error) {
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Failed to update the total views',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Get('/author/:authorId')
   async getAuthorBlogs(
     @Param('authorId') authorId: string,

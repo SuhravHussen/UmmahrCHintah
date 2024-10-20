@@ -162,6 +162,27 @@ export class BlogsService {
     }
   }
 
+  async updateTotalViews(id: string): Promise<GetSingleBlogResponse> {
+    try {
+      const updatedBlog = await this.prisma.blog.update({
+        where: { id },
+        data: {
+          totalViews: {
+            increment: 1,
+          },
+        },
+      });
+      return {
+        data: updatedBlog,
+        _links: {
+          self: `/blogs/${updatedBlog.id}`,
+        },
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    }
+  }
+
   // Delete blog by ID
   async deleteBlogById(id: string): Promise<{ message: string }> {
     try {
