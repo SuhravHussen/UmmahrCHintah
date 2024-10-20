@@ -1,4 +1,5 @@
 import { getSingleArticle } from "@/actions/getSingleArticle";
+import updateTotalViews from "@/actions/updateTotalViews";
 import ArticlePage from "@/components/common/article/ArticlePage";
 import { IArticle } from "@/interfaces/Article.interface";
 
@@ -8,6 +9,7 @@ export default async function page({ params }: { params: { slug: string } }) {
   if (!id) {
     return <p>Sorry Article Id not available</p>;
   }
+  await updateTotalViews(id);
 
   const data = await getSingleArticle(id);
   const blog = data.data as IArticle;

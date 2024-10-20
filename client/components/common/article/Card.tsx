@@ -9,7 +9,6 @@ import { IArticle } from "@/interfaces/Article.interface";
 import { Clock9, Eye, Feather } from "lucide-react";
 import Link from "next/link";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ArticleCard({ article }: { article: IArticle }) {
   return (
     <Link href={`/articles/${article.title}-${article.id}`}>
