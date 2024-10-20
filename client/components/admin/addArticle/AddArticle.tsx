@@ -193,6 +193,7 @@ export default function AddArticle() {
           richText={content}
           dateWritten={date as string}
           author={author.name}
+          originalPostLink={originalPostLink}
         />
       </form>
     </div>
