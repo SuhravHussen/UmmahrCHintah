@@ -11,7 +11,7 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let { user, error, isLoading } = useUser();
+  const { user, error, isLoading } = useUser();
 
   const { toast } = useToast();
   if (isLoading) {

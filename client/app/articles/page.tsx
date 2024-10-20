@@ -5,7 +5,6 @@ import ArticleList from "@/components/articles/ArticleList";
 
 import { SelectComponent } from "@/components/common/Select";
 import ArticleCardSkeleton from "@/components/common/article/ArticleCardSkeleton";
-import getToken from "@/actions/getAccessToken";
 
 export const dynamic = "force-dynamic";
 
