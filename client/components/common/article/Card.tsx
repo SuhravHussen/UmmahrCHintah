@@ -8,8 +8,10 @@ import {
 import { IArticle } from "@/interfaces/Article.interface";
 import { convertToLocalBangladeshTime } from "@/lib/convertTime";
 import convertToSlug from "@/lib/convertToSlug";
-import { CalendarIcon, Clock9, Eye, Feather } from "lucide-react";
+import { CalendarIcon, Eye } from "lucide-react";
 import Link from "next/link";
+import { GiFeather } from "react-icons/gi";
+import { IoMdBook } from "react-icons/io";
 
 export default function ArticleCard({ article }: { article: IArticle }) {
   return (
@@ -24,15 +26,15 @@ export default function ArticleCard({ article }: { article: IArticle }) {
         <CardFooter className="flex flex-col items-start">
           <div className="flex gap-4 items-center">
             <p className="flex text-sm items-center gap-2">
-              <Clock9 size={15} /> {article.readingTime}
+              <IoMdBook size={18} /> {article.readingTime}
             </p>
             <p className="flex text-sm items-center gap-2">
               <Eye size={15} /> {article.totalViews}
             </p>
           </div>
           <div className="flex text-sm items-center gap-2 mt-3 justify-between  w-full">
-            <div className="flex text-sm items-center gap-2 ">
-              <Feather size={15} /> {article.author.name}
+            <div className="flex text-sm items-center gap-2 justify-center">
+              <GiFeather size={16} /> {article.author.name}
             </div>
             <div className="flex items-center  justify-center">
               <CalendarIcon className="mr-2 h-4 w-4" />

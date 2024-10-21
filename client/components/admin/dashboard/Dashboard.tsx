@@ -21,7 +21,13 @@ export default function Dashboard() {
   }> = async () => {
     return await getTotalCounts();
   };
-  const { data, execute: getTotalNumber } = useAsync<
+  const {
+    data = {
+      totalBlogs: 0,
+      totalAuthors: 0,
+    },
+    execute: getTotalNumber,
+  } = useAsync<
     {
       totalBlogs: number;
       totalAuthors: number;
@@ -46,11 +52,11 @@ export default function Dashboard() {
       <CardContent className="flex items-center gap-4">
         <InfoCard
           title="Total articles"
-          info={data?.totalBlogs + " articles"}
+          info={`${data ? data.totalBlogs : 0} articles`}
         />
         <InfoCard
           title="Total authors"
-          info={data?.totalAuthors + " authors"}
+          info={`${data ? data.totalAuthors : 0} authors`}
         />
       </CardContent>
 
