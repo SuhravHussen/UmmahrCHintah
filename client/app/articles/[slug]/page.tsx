@@ -3,11 +3,20 @@ import updateTotalViews from "@/actions/updateTotalViews";
 import ArticlePage from "@/components/common/article/ArticlePage";
 import { IArticle } from "@/interfaces/Article.interface";
 
-export default async function page({ params }: { params: { slug: string } }) {
-  const id = params.slug.split("-").pop();
-
+export default async function page({
+  searchParams,
+}: {
+  searchParams: {
+    id: string | undefined;
+  };
+}) {
+  const id = searchParams.id || "";
   if (!id) {
-    return <p>Sorry Article Id not available</p>;
+    return (
+      <div className="flex justify-center items-center p-10 min-h-[80vh]">
+        <p className="font-bold text-2xl">দুঃখিত, আর্টিকেল পাওয়া যায়নি</p>
+      </div>
+    );
   }
   await updateTotalViews(id);
 
@@ -15,7 +24,11 @@ export default async function page({ params }: { params: { slug: string } }) {
   const blog = data.data as IArticle;
 
   if (!blog || Object.keys(blog).length === 0) {
-    return <p>Sorry Article is not available</p>;
+    return (
+      <div className="flex justify-center items-center p-10 min-h-[80vh]">
+        <p className="font-bold text-2xl">দুঃখিত, আর্টিকেল পাওয়া যায়নি</p>
+      </div>
+    );
   }
 
   return (

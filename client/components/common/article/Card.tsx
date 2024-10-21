@@ -7,12 +7,13 @@ import {
 } from "@/components/ui/card";
 import { IArticle } from "@/interfaces/Article.interface";
 import { convertToLocalBangladeshTime } from "@/lib/convertTime";
+import convertToSlug from "@/lib/convertToSlug";
 import { CalendarIcon, Clock9, Eye, Feather } from "lucide-react";
 import Link from "next/link";
 
 export default function ArticleCard({ article }: { article: IArticle }) {
   return (
-    <Link href={`/articles/${article.title}-${article.id}`}>
+    <Link href={`/articles/${convertToSlug(article.title)}?id=${article.id}`}>
       <Card className="cursor-pointer hover:bg-card-hover">
         <CardHeader>
           <CardTitle className="truncate py-2">{article.title}</CardTitle>
@@ -29,7 +30,7 @@ export default function ArticleCard({ article }: { article: IArticle }) {
               <Eye size={15} /> {article.totalViews}
             </p>
           </div>
-          <p className="flex text-sm items-center gap-2 mt-3 justify-between  w-full">
+          <div className="flex text-sm items-center gap-2 mt-3 justify-between  w-full">
             <div className="flex text-sm items-center gap-2 ">
               <Feather size={15} /> {article.author.name}
             </div>
@@ -37,7 +38,7 @@ export default function ArticleCard({ article }: { article: IArticle }) {
               <CalendarIcon className="mr-2 h-4 w-4" />
               <p>{convertToLocalBangladeshTime(article.dateWritten)}</p>
             </div>
-          </p>
+          </div>
         </CardFooter>
       </Card>
     </Link>
