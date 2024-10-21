@@ -92,7 +92,6 @@ export default function AddArticle() {
   };
 
   const handleAddArticle = async (event: FormEvent<HTMLFormElement>) => {
-    setLoading(true);
     event.preventDefault();
 
     if (!validateFields()) return;
@@ -111,6 +110,7 @@ export default function AddArticle() {
     }
 
     try {
+      setLoading(true);
       const res = await addArticle(body, token.accessToken as string);
 
       if ("statusCode" in res && res.statusCode === 401) {
