@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import DateSelect from "./DateSelect";
 
 export function DatePicker({
   date,
@@ -35,6 +36,7 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
+        <DateSelect date={new Date(date)} setDate={setDate} />
         <Calendar
           mode="single"
           selected={new Date(date)}

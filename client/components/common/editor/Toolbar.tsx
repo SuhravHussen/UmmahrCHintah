@@ -1,5 +1,5 @@
 "use client";
-import { List, Minus, Quote, UnderlineIcon } from "lucide-react";
+import { Link, List, Minus, Quote, UnderlineIcon } from "lucide-react";
 
 import { type Editor } from "@tiptap/react";
 import {
@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { ListOrdered } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -34,8 +34,29 @@ type Props = {
 export default function ToolBar({ editor }: Props) {
   const [imagePopOverOpen, setImagePopOver] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  if (!editor) return null;
 
+  const setLink = useCallback(() => {
+    if (!editor) return null;
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt("URL", previousUrl);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  }, [editor]);
+
+  if (!editor) return null;
   const addImage = () => {
     if (imageUrl) {
       editor.chain().focus().setImage({ src: imageUrl }).run();
@@ -123,6 +144,10 @@ export default function ToolBar({ editor }: Props) {
     {
       icon: <Minus className="size-4" />,
       onClick: () => editor.chain().focus().setHorizontalRule().run(),
+    },
+    {
+      icon: <Link className="size-4" />,
+      onClick: setLink,
     },
   ];
 

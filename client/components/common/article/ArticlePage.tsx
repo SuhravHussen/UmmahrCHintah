@@ -69,6 +69,7 @@ export default function ArticlePage({
             </Link>
           ))}
         </div>
+        <Separator className="my-6" />
 
         <DisplayArticle article={richText} />
         {/* </Card> */}

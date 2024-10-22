@@ -12,6 +12,8 @@ import ImageResize from "tiptap-extension-resize-image";
 import Blockquote from "@tiptap/extension-blockquote";
 import Underline from "@tiptap/extension-underline";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import Link from "@tiptap/extension-link";
+
 import { useEffect } from "react";
 
 export default function RichTextEditor({
@@ -46,6 +48,11 @@ export default function RichTextEditor({
       Blockquote,
       Underline,
       HorizontalRule,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
     ],
     editorProps: {
       attributes: {

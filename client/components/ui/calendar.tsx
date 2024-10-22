@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { DayPicker } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
   className,
@@ -15,10 +15,22 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const [date, setDate] = React.useState(new Date());
+
+  React.useEffect(() => {
+    // @ts-ignore
+    setDate(new Date(props.selected));
+  }, [props.selected]);
   return (
+    // @ts-ignore
     <DayPicker
+      month={date}
+      onMonthChange={setDate}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
+      selected={
+        Array.isArray(props.selected) ? props.selected : [props.selected]
+      }
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
@@ -63,10 +75,12 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
       }}
+      // @ts-ignore
+      selected={date}
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

@@ -3,6 +3,7 @@ export default function Footer() {
     { name: "chintaporadh", link: "https://chintaporadh.com/" },
     { name: "shamsularefin", link: "https://shamsularefin.com" },
     { name: "hoytoba", link: "https://hoytoba.com/" },
+    { name: "irfan sadik", link: "https://irfansadik.substack.com/" },
   ];
 
   return (
