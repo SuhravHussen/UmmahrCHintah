@@ -3,6 +3,55 @@ import updateTotalViews from "@/actions/updateTotalViews";
 import ArticlePage from "@/components/common/article/ArticlePage";
 import { IArticle } from "@/interfaces/Article.interface";
 
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    id: string | undefined;
+  };
+}) {
+  const id = searchParams.id || "";
+
+  const data = await getSingleArticle(id);
+
+  const blog = data.data as IArticle;
+
+  // return a dynamic title
+  return {
+    title: blog.title,
+    description: blog.content.text.substring(0, 29) + "...",
+    openGraph: {
+      title: blog.title,
+      description: blog.content.text.substring(0, 29) + "...",
+      url: data._links.self,
+      siteName: "Ummar Chintah",
+      locale: "en_US",
+      type: "website",
+      publishedTime: new Date(blog.dateWritten),
+      authors: [blog.author.name],
+    },
+    robots: {
+      index: true,
+      follow: false,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: false,
+        noimageindex: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.content.text.substring(0, 29) + "...",
+    },
+    category: "islam",
+  };
+}
+
 export default async function page({
   searchParams,
 }: {
