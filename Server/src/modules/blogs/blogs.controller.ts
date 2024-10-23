@@ -78,6 +78,23 @@ export class BlogsController {
     }
   }
 
+  // @Post('/temp/temp')
+  // async createBlogs(): Promise<any> {
+  //   try {
+  //     await this.blogsService.createBlogs();
+
+  //     return {};
+  //   } catch (e) {
+  //     throw new HttpException(
+  //       {
+  //         devMessage: e.message,
+  //         clientMessage: 'Sorry ! something went wrong in server',
+  //       },
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
+
   @Get(':blogId')
   async getBlogById(
     @Param('blogId') blogId: string,

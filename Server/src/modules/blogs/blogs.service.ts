@@ -32,6 +32,66 @@ export class BlogsService {
     }
   }
 
+  // Method to create a list of blogs
+  // async createBlogs(): Promise<Blog[]> {
+  //   const createdBlogs: Blog[] = [];
+
+  //   try {
+  //     const response = await axios.get(
+  //       'https://ummahrchintah.onrender.com/v1/blogs?page=1&limit=150&sort=recent',
+  //     );
+
+  //     const blogs = response.data.data.map((d) => ({
+  //       title: d.title,
+  //       content: d.content,
+  //       dateWritten: d.dateWritten,
+  //       readingTime: d.readingTime,
+  //       keywords: d.keywords,
+  //       originalPostLink: d.originalPostLink,
+  //       authorId: d.authorId,
+  //       totalViews: d.totalViews,
+  //     }));
+  //     // Loop through each blog and create it in the database
+  //     for (const blog of blogs) {
+  //       const createdBlog = await this.prisma.blog.create({
+  //         data: {
+  //           ...blog, // Spread the entire blog object directly
+  //         },
+  //       });
+  //       createdBlogs.push(createdBlog);
+  //     }
+
+  //     console.log('Created blogs:', createdBlogs);
+  //   } catch (error) {
+  //     // Handle the error for each blog as needed
+  //     console.error(`Failed to create blog: ${error?.message}`);
+  //   }
+  //   return createdBlogs;
+  // }
+
+  // async createAuhors() {
+  //   try {
+  //     const response = await axios.get(
+  //       'https://ummahrchintah.onrender.com/v1/authors?page=1&limit=15',
+  //     );
+
+  //     const auhtors = response.data.data;
+  //     console.log(auhtors);
+  //     // Loop through each blog and create it in the database
+  //     for (const blog of auhtors) {
+  //       const createdBlog = await this.prisma.author.create({
+  //         data: {
+  //           ...blog, // Spread the entire blog object directly
+  //         },
+  //       });
+  //       console.log(createdBlog);
+  //     }
+  //   } catch (error) {
+  //     // Handle the error for each blog as needed
+  //     console.error(`Failed to create blog: ${error?.message}`);
+  //   }
+  // }
+
   // Service to get all blogs with pagination, sorting, and links
   async getAllBlogs(
     page: number,
