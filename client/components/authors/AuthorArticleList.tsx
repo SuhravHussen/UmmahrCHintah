@@ -28,6 +28,7 @@ export default async function AuthorArticleList({
             totalPage={data.pagination.totalPage}
             currentPage={currentPage}
             query=""
+            sort=""
           />
         </div>
       )}
