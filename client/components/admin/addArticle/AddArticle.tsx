@@ -85,9 +85,7 @@ export default function AddArticle() {
   const resetStates = () => {
     setContent("");
     setTitle("");
-    setAuthor({ name: "", id: "", image: "" });
     setDate(new Date());
-    setKeywords([]);
     setOriginalPostLink("");
   };
 
@@ -97,20 +95,19 @@ export default function AddArticle() {
     if (!validateFields()) return;
 
     const body = buildRequestBody();
-
-    const token = await getToken();
-    if (!token.accessToken) {
-      toast({
-        title: "Sorry!",
-        description: "Something went wrong! You may need to log in again.",
-        className: "mt-4",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
       setLoading(true);
+      const token = await getToken();
+      if (!token.accessToken) {
+        toast({
+          title: "Sorry!",
+          description: "Something went wrong! You may need to log in again.",
+          className: "mt-4",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const res = await addArticle(body, token.accessToken as string);
 
       if ("statusCode" in res && res.statusCode === 401) {
@@ -129,6 +126,7 @@ export default function AddArticle() {
           description: "Article added successfully.",
           className: "mt-4",
         });
+        resetStates();
       }
     } catch (e) {
       console.error(e);
@@ -138,7 +136,6 @@ export default function AddArticle() {
         className: "mt-4",
         variant: "destructive",
       });
-      resetStates();
     } finally {
       setLoading(false);
     }
