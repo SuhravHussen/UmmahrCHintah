@@ -217,4 +217,23 @@ export class BlogsController {
       );
     }
   }
+
+  // Get a list of blogs with pagination and sorting
+  @Get('/relatedBlogs')
+  async getRelatedBlogs(
+    @Query('id') id: string = '',
+  ): Promise<Partial<GetAllBlogsResponse>> {
+    try {
+      return await this.blogsService.getRelatedBlogs(id);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        {
+          devMessage: error.message,
+          clientMessage: 'Sorry! Something wrong in our server',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

@@ -423,4 +423,65 @@ export class BlogsService {
       throw new Error(error?.message);
     }
   }
+
+  async getRelatedBlogs(blogId) {
+    // Get the current blog to retrieve its keywords
+    const currentBlog = await this.prisma.blog.findUnique({
+      where: { id: blogId },
+    });
+
+    if (!currentBlog) {
+      throw new Error('Blog not found');
+    }
+
+    const keywords = currentBlog.keywords;
+
+    const relatedBlogsByKeywords = await this.prisma.blog.findMany({
+      where: {
+        id: { not: blogId },
+        keywords: { hasSome: keywords },
+      },
+      take: 3,
+      include: {
+        author: true,
+      },
+    });
+
+    if (relatedBlogsByKeywords.length < 3) {
+      const remainingCount = 3 - relatedBlogsByKeywords.length;
+
+      // Get the total count of blogs excluding the current blog and already found related blogs
+      const totalCount = await this.prisma.blog.count({
+        where: {
+          id: { not: blogId, notIn: relatedBlogsByKeywords.map((b) => b.id) },
+        },
+      });
+
+      // Calculate the random skip value
+      const randomSkip = Math.floor(
+        Math.random() * (totalCount - remainingCount),
+      );
+
+      const randomBlogs = await this.prisma.blog.findMany({
+        where: {
+          id: { not: blogId, notIn: relatedBlogsByKeywords.map((b) => b.id) },
+        },
+        take: remainingCount,
+        skip: randomSkip,
+        include: {
+          author: true,
+        },
+      });
+
+      // Combine the related blogs and random blogs
+      relatedBlogsByKeywords.push(...randomBlogs);
+    }
+
+    // Ensure the result contains exactly 3 blogs
+    const finalRelatedBlogs = relatedBlogsByKeywords.slice(0, 3);
+
+    return {
+      data: finalRelatedBlogs,
+    };
+  }
 }

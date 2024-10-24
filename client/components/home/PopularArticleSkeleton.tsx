@@ -1,6 +1,6 @@
 import { secondaryFont } from "@/lib/fonts";
-import { Feather } from "lucide-react";
 import React from "react";
+import { GiFeather } from "react-icons/gi";
 
 export default function PopularArticleSkeleton() {
   return (
@@ -8,7 +8,7 @@ export default function PopularArticleSkeleton() {
       <h1
         className={`${secondaryFont.className} text-xl md:text-2xl flex gap-2 items-center`}
       >
-        জনপ্রিয় প্রবন্ধসমূহ <Feather />
+        <GiFeather size={20} /> জনপ্রিয় প্রবন্ধসমূহ
       </h1>
       <div className="flex flex-col gap-4 mt-4">
         {Array(5)

@@ -1,7 +1,10 @@
 import { getSingleArticle } from "@/actions/getSingleArticle";
 import updateTotalViews from "@/actions/updateTotalViews";
+import ArticleCardSkeleton from "@/components/common/article/ArticleCardSkeleton";
 import ArticlePage from "@/components/common/article/ArticlePage";
+import RelatedArticles from "@/components/common/article/RelatedArticles";
 import { IArticle } from "@/interfaces/Article.interface";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   searchParams,
@@ -59,6 +62,16 @@ export default async function page({
     id: string | undefined;
   };
 }) {
+  const ArticlesLoader = () => {
+    return (
+      <div className="flex flex-col gap-4">
+        {Array.from({ length: 5 }, (_, index) => (
+          <ArticleCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  };
+
   const id = searchParams.id || "";
   if (!id) {
     return (
@@ -81,14 +94,19 @@ export default async function page({
   }
 
   return (
-    <ArticlePage
-      title={blog.title}
-      richText={blog.content.richText}
-      dateWritten={blog.dateWritten}
-      author={blog.author.name}
-      keywords={blog.keywords}
-      readingTime={blog.readingTime}
-      originalPostLink={blog.originalPostLink || ""}
-    />
+    <>
+      <ArticlePage
+        title={blog.title}
+        richText={blog.content.richText}
+        dateWritten={blog.dateWritten}
+        author={blog.author.name}
+        keywords={blog.keywords}
+        readingTime={blog.readingTime}
+        originalPostLink={blog.originalPostLink || ""}
+      />
+      <Suspense fallback={<ArticlesLoader />}>
+        <RelatedArticles id={blog.id} />
+      </Suspense>
+    </>
   );
 }

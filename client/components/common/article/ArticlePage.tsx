@@ -1,5 +1,5 @@
 import { convertToLocalBangladeshTime } from "@/lib/convertTime";
-import React from "react";
+import React, { Suspense } from "react";
 import { CalendarIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
 import DisplayArticle from "./DisplayArticle";
 import { Separator } from "@/components/ui/separator";
