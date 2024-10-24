@@ -7,7 +7,7 @@ const ProgressBarClient = () => {
     <>
       <ProgressBar
         height="4px"
-        color="linear-gradient(90deg, rgba(32,240,163,0.9973262032085561) 0%, rgba(255,255,255,1) 84%) !important"
+        color="linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(43,145,122,1) 61%) !important"
         options={{ showSpinner: false }}
         shallowRouting
       />

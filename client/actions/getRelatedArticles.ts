@@ -11,7 +11,7 @@ export async function getRelatedArticles(
     );
 
     const data = await response.json();
-    console.log("datra is", data);
+
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
