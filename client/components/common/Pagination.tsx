@@ -6,20 +6,27 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
-interface PaginationDemoProps {
+interface PaginationProps {
   currentPage: number;
   totalPage: number;
-  query: string; // The search query or any other query string
+  query: string;
+  sort: string;
 }
 
 export function PaginationComponent({
   currentPage,
   totalPage,
   query,
-}: PaginationDemoProps) {
+  sort,
+}: PaginationProps) {
   const generatePageLink = (pageNumber: number) => {
-    // Conditionally add query only if it's not empty
-    return query ? `?page=${pageNumber}&query=${query}` : `?page=${pageNumber}`;
+    let link = query
+      ? `?page=${pageNumber}&query=${query}`
+      : `?page=${pageNumber}`;
+    if (sort) {
+      link += `&sort=${sort}`;
+    }
+    return link;
   };
 
   const renderPageLinks = () => {

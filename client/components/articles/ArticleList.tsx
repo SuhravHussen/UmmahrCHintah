@@ -32,6 +32,7 @@ export default async function ArticleList({
             totalPage={data.pagination.totalPage}
             currentPage={currentPage}
             query={query}
+            sort={sort}
           />
         </div>
       )}
