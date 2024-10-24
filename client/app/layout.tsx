@@ -6,6 +6,9 @@ import Navigation from "@/components/layout/root/Navigation";
 import Footer from "@/components/layout/root/Footer";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Toaster } from "@/components/ui/toaster";
+import ProgressBarClient from "@/components/NprogressProvider";
+import { Suspense } from "react";
+import ScrollProgressProvider from "@/components/ScrollProgressProvider";
 
 export const metadata: Metadata = {
   title: "ঊম্মাহর চিন্তাহ",
@@ -26,6 +29,10 @@ export default function RootLayout({
         <UserProvider>
           <ThemeProvider attribute="class">
             <Toaster />
+            <Suspense fallback={<div></div>}>
+              <ProgressBarClient />
+              <ScrollProgressProvider />
+            </Suspense>
             <main className="max-w-5xl mx-auto p-4">
               <Navigation />
               {children}

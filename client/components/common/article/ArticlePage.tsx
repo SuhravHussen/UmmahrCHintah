@@ -8,6 +8,7 @@ import { secondaryFont } from "@/lib/fonts";
 import Link from "next/link";
 import { IoMdBook } from "react-icons/io";
 import { LiaSlackHash } from "react-icons/lia";
+
 export default function ArticlePage({
   title,
   author,
