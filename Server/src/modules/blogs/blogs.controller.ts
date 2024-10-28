@@ -196,7 +196,6 @@ export class BlogsController {
       );
     }
   }
-  cm2cukv7c0000fc5amff6eby4;
   @Get('/search')
   async getSearchedBlogs(
     @Query('page') page: number = 1,

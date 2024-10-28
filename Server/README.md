@@ -1,85 +1,68 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Ummar chintah Server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the server of the Ummar Chintah website. It is responsible for connecting to the database and providing APIs for getting, adding, editing, and deleting articles and authors.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Live](#live)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- **Public API**
 
-```bash
-$ yarn install
-```
+  - Get articles and authors with pagination features
+  - Search feature
+  - Sorting supported
 
-## Compile and run the project
+- **Private API**
 
-```bash
-# development
-$ yarn run start
+  - Protected routes
+  - Add, edit, and delete authors and articles
+  - Role-based protection
 
-# watch mode
-$ yarn run start:dev
+- **HATEOAS Supported**
+- **Connected to PostgreSQL through Prisma**
+- **Error Monitoring with Sentry**
 
-# production mode
-$ yarn run start:prod
-```
+## Tech Stack
 
-## Run tests
+- **NestJS - Fastify**: Backend framework for building efficient and scalable applications using Fastify as the HTTP server.
+- **Prisma**: Type-safe ORM for connecting and interacting with PostgreSQL.
+- **TypeScript**: Statically typed language for building scalable applications.
+- **Sentry**: Error tracking and monitoring tool for catching and resolving bugs.
+- **PostgreSQL**: Relational database system for managing and storing data.
 
-```bash
-# unit tests
-$ yarn run test
+## Installation
 
-# e2e tests
-$ yarn run test:e2e
+Follow these steps to set up the project locally.
 
-# test coverage
-$ yarn run test:cov
-```
+1. Clone the repository:
 
-## Resources
+   ```bash
+   git clone git@github.com:SuhravHussen/UmmahrChintah.git
+   ```
 
-Check out a few resources that may come in handy when working with NestJS:
+2. Navigate to the project directory:
+   ```bash
+   cd UmmahrChintah/Server
+   ```
+3. Install the dependencies:
+   ```bash
+    yarn install
+   ```
+4. Create a `.env` file for environment variables
+5. Run the development server
+   ```bash
+   yarn start:dev
+   ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Live
 
-## Support
+[Ummar Chintah Server](https://ummahrchintah.onrender.com/v1)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Postman Collection
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+[Ummar Chintah Postman Collection](https://gold-star-209210.postman.co/workspace/Ummar-Chintah~9bbf4078-d69e-4ebd-bc8e-ba5c358c5264/collection/16340384-89f102ad-abdf-46a3-908d-65624c6a6873?action=share&creator=16340384)
