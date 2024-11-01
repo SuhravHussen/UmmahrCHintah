@@ -31,13 +31,13 @@ export default function Layout({
     redirect("/");
   }
 
-  if (!user) {
-    redirect("/");
-  }
+  // if (!user) {
+  //   redirect("/");
+  // }
 
-  if (!hasDashboardAccess(user)) {
-    redirect("/");
-  }
+  // if (!hasDashboardAccess(user)) {
+  //   redirect("/");
+  // }
 
   return <div>{children}</div>;
 }

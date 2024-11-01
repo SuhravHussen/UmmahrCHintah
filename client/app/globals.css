@@ -96,30 +96,30 @@ body {
 
 @layer base {
   :root {
-    --background: 48 100% 95%;
-    --foreground: 48 5% 0%;
-    --card: 48 60% 90%;
-    --card-foreground: 48 5% 10%;
-    --popover: 48 100% 95%;
-    --popover-foreground: 48 100% 0%;
-    --primary: 48 11% 44%;
+    --background: 352 41% 98%;
+    --foreground: 352 70% 0%;
+    --muted: 352 22% 92%;
+    --muted-foreground: 352 1% 36%;
+    --popover: 352 41% 98%;
+    --popover-foreground: 352 70% 0%;
+    --card: 352 41% 98%;
+    --card-foreground: 352 70% 0%;
+    --border: 352 3% 88%;
+    --input: 352 3% 88%;
+    --primary: 352 31% 54%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 48 30% 70%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 10 30% 85%;
-    --muted-foreground: 48 5% 35%;
-    --accent: 10 30% 80%;
-    --accent-foreground: 48 5% 10%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 48 5% 90%;
-    --border: 48 30% 50%;
-    --input: 48 30% 18%;
-    --ring: 48 11% 44%;
+    --secondary: 352 11% 89%;
+    --secondary-foreground: 352 11% 29%;
+    --accent: 352 20% 81%;
+    --accent-foreground: 352 20% 21%;
+    --destructive: 1 87% 34%;
+    --destructive-foreground: 1 87% 94%;
+    --ring: 352 31% 54%;
     --radius: 0.5rem;
     /* main theme ends */
     --link-active: 215 27.9% 16.9%;
     --link-inactive: 0 0% 40%;
-    --bg-card-hover: 48 100% 96.1%;
+    --bg-card-hover: 48 20% 96.1%;
     --toolbar-button-active: 215 27.9% 16.9%;
 
     /* blog content */
