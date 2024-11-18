@@ -1,19 +1,4 @@
-import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { PaginationInfo } from "./Common.interface";
-import { PaginationLinks } from "./Common.interface";
-
-export interface IUser extends UserProfile {
-  "/roles": string[];
-  email: string;
-  email_verified: boolean;
-  name: string;
-  nickname: string;
-  picture: string;
-  sid: string;
-  sub: string;
-  updated_at: string;
-}
-
+import { PaginationInfo, PaginationLinks } from './common.interface';
 export interface IDetailedUser {
   created_at: string; // ISO date string
   email: string;
@@ -35,14 +20,14 @@ export interface IDetailedUser {
   user_id: string;
 }
 
-export interface getAllUsersResponse {
-  data: IDetailedUser[];
-  pagination: PaginationInfo;
-  _links: PaginationLinks;
-}
-
 export interface UserRole {
   id: string;
   name: string;
   description?: string;
+}
+
+export interface getAllUsersResponse {
+  data: IDetailedUser[];
+  pagination: PaginationInfo;
+  _links: PaginationLinks;
 }

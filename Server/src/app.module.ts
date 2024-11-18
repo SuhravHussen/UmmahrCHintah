@@ -7,6 +7,7 @@ import { SentryModule } from '@sentry/nestjs/setup';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { AuthorModule } from './modules/author/author.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     AuthModule,
     AuthorModule,
     DashboardModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

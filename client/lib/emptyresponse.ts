@@ -46,3 +46,16 @@ export const emptyArticleResponse: EmptySingleArticleResponse = {
     self: "",
   },
 };
+
+export const emptyUserListResponse = {
+  data: [],
+  pagination: {
+    totalPage: 0,
+    totalAuthors: 0,
+  },
+  _links: {
+    self: "",
+    prev: null,
+    next: null,
+  },
+};

@@ -1,3 +1,5 @@
+import { PaginationInfo, PaginationLinks } from './common.interface';
+
 export interface Blog {
   id: string; // Unique identifier for the blog
   title: string; // Title of the blog
@@ -8,17 +10,6 @@ export interface Blog {
   originalPostLink?: string; // Optional link to the original post
   authorId: string; // ID of the author
   totalViews: number; // Number of views the blog has received
-}
-
-export interface PaginationLinks {
-  self: string;
-  next: string | null;
-  prev: string | null;
-}
-
-export interface PaginationInfo {
-  totalPage: number;
-  totalBlogs: number;
 }
 
 export interface GetAllBlogsResponse {

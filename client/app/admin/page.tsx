@@ -5,6 +5,7 @@ import Dashboard from "@/components/admin/dashboard/Dashboard";
 import Articles from "@/components/admin/articles/Articles";
 import AddArticle from "@/components/admin/addArticle/AddArticle";
 import Authors from "@/components/admin/auhtors/Authors";
+import Users from "@/components/admin/users/Users";
 
 export default function Page() {
   return (
@@ -14,7 +15,7 @@ export default function Page() {
           <TabsTrigger value="Dashboard">Dashboard</TabsTrigger>
           <TabsTrigger value="Articles">Articles</TabsTrigger>
           <TabsTrigger value="addArticle">Add Article</TabsTrigger>
-          <TabsTrigger value="authors">Authors</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
         <TabsContent value="Dashboard">
           <Dashboard />
@@ -27,6 +28,9 @@ export default function Page() {
         </TabsContent>
         <TabsContent value="authors">
           <Authors />
+        </TabsContent>
+        <TabsContent value="users">
+          <Users />
         </TabsContent>
       </Tabs>
     </div>
