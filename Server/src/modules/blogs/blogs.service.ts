@@ -273,6 +273,7 @@ export class BlogsService {
         take: limit,
         where: { authorId }, // Filter by authorId
         include: { author: true }, // Include author details
+        orderBy: { dateWritten: 'desc' },
       });
 
       // Get total blog count for this author
