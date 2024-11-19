@@ -6,6 +6,7 @@ import {
 } from "./../interfaces/Article.interface";
 import { GetSingleArticleResponse } from "@/interfaces/Article.interface";
 import { emptyArticleResponse } from "@/lib/emptyresponse";
+import { revalidateTag } from "next/cache";
 
 export async function updateArticle(
   data: Partial<IArticle>,
@@ -23,7 +24,7 @@ export async function updateArticle(
     });
 
     const articleData = await response.json();
-
+    revalidateTag(id);
     return articleData;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);

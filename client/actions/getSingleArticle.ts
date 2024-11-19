@@ -8,7 +8,9 @@ export async function getSingleArticle(
   id: string
 ): Promise<GetSingleArticleResponse | EmptySingleArticleResponse> {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/blogs/${id}`);
+    const response = await fetch(`${process.env.API_BASE_URL}/blogs/${id}`, {
+      next: { tags: [id] },
+    });
     const data = await response.json();
     return data;
   } catch (error) {

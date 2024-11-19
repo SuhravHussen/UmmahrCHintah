@@ -55,6 +55,8 @@ import { IArticle } from "@/interfaces/Article.interface";
 import { deleteArticle } from "@/actions/deleteArticle";
 import getToken from "@/actions/getAccessToken";
 import { toast } from "@/hooks/use-toast";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import checkRole from "@/lib/roleCheck";
 
 export const columns: ColumnDef<IArticle>[] = [
   {
@@ -84,8 +86,21 @@ export const columns: ColumnDef<IArticle>[] = [
     enableHiding: false,
     cell: ({ row, table }) => {
       const [dropdownOpen, setDropDownOpen] = React.useState(false);
+      const { user } = useUser();
 
       const handleDelete = async (id: string) => {
+        const hasAccess = checkRole(user, "admin");
+
+        if (!hasAccess) {
+          toast({
+            title: "Sorry!",
+            description: "You don't have access to delete article",
+            className: "mt-4",
+            variant: "destructive",
+          });
+          return;
+        }
+
         const token = await getToken();
 
         if (!token.accessToken) {

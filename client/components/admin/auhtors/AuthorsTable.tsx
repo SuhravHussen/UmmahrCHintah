@@ -51,6 +51,8 @@ import placeHolderImage from "../../../public/user-placeholder.png";
 import getToken from "@/actions/getAccessToken";
 import { toast } from "@/hooks/use-toast";
 import { deleteAuthor } from "@/actions/deleteAuthor";
+import checkRole from "@/lib/roleCheck";
+import { useUser } from "@auth0/nextjs-auth0/client";
 export type Author = {
   name: string;
   id: string;
@@ -95,7 +97,21 @@ export const columns: ColumnDef<Author>[] = [
     cell: ({ row, table }) => {
       const [dropdownOpen, setDropDownOpen] = React.useState(false);
 
+      const { user } = useUser();
+
       const handleDelete = async (id: string) => {
+        const hasAccess = checkRole(user, "admin");
+
+        if (!hasAccess) {
+          toast({
+            title: "Sorry!",
+            description: "You don't have access to delete article",
+            className: "mt-4",
+            variant: "destructive",
+          });
+          return;
+        }
+
         const token = await getToken();
 
         if (!token.accessToken) {

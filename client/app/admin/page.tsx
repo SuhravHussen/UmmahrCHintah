@@ -11,10 +11,11 @@ export default function Page() {
   return (
     <div className="mt-16 mb-6">
       <Tabs defaultValue="Dashboard">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="Dashboard">Dashboard</TabsTrigger>
           <TabsTrigger value="Articles">Articles</TabsTrigger>
           <TabsTrigger value="addArticle">Add Article</TabsTrigger>
+          <TabsTrigger value="authors">Authors</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
         <TabsContent value="Dashboard">

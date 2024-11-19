@@ -59,6 +59,8 @@ import { addRole } from "@/actions/addRole";
 import { deleteRole } from "@/actions/deleteRole";
 import { deleteUser } from "@/actions/deleteUser";
 import { IDetailedUser, UserRole } from "@/interfaces/User.interface";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import checkRole from "@/lib/roleCheck";
 
 export const columns: ColumnDef<IDetailedUser>[] = [
   {
@@ -105,7 +107,21 @@ export const columns: ColumnDef<IDetailedUser>[] = [
         (role: { name: string }) => role.name.trim() === "moderator"
       );
 
+      const { user } = useUser();
+
       const handleDeleteUser = async (id: string) => {
+        const hasAccess = checkRole(user, "admin");
+
+        if (!hasAccess) {
+          toast({
+            title: "Sorry!",
+            description: "You don't have access to delete user",
+            className: "mt-4",
+            variant: "destructive",
+          });
+          return;
+        }
+
         const token = await getToken();
 
         if (!token.accessToken) {
@@ -154,6 +170,18 @@ export const columns: ColumnDef<IDetailedUser>[] = [
 
       const handleAddRole = async (userId: string, roleName: string) => {
         try {
+          const hasAccess = checkRole(user, "admin");
+
+          if (!hasAccess) {
+            toast({
+              title: "Sorry!",
+              description: "You don't have access to delete user",
+              className: "mt-4",
+              variant: "destructive",
+            });
+            return;
+          }
+
           const token = await getToken();
 
           if (!token.accessToken) {
@@ -225,6 +253,18 @@ export const columns: ColumnDef<IDetailedUser>[] = [
 
       const handleDeleteRole = async (userId: string, roleName: string) => {
         try {
+          const hasAccess = checkRole(user, "admin");
+
+          if (!hasAccess) {
+            toast({
+              title: "Sorry!",
+              description: "You don't have access to delete user",
+              className: "mt-4",
+              variant: "destructive",
+            });
+            return;
+          }
+
           const token = await getToken();
 
           if (!token.accessToken) {
