@@ -18,10 +18,14 @@ export async function GET() {
       session.accessTokenExpiresAt * 1000 < Date.now()
     ) {
       const token = await getAccessToken();
-      return NextResponse.json(token);
+      return NextResponse.json({
+        accessToken: token,
+      });
     } else {
       const token = session.accessToken;
-      return NextResponse.json(token);
+      return NextResponse.json({
+        accessToken: token,
+      });
     }
   } catch (e) {
     console.log(e);
