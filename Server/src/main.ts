@@ -17,7 +17,11 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:3001', 'https://ummar-chintah.vercel.app'],
+    origin: [
+      'http://localhost:3001',
+      'https://ummar-chintah.vercel.app',
+      process.env.AUTH0_API,
+    ],
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: '*',
     credentials: true,
