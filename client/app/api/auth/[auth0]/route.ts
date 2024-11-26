@@ -25,7 +25,7 @@ export const GET = handleAuth({
       };
     } else {
       return {
-        returnTo: returnUrl.join(""),
+        returnTo: "/",
       };
     }
   }),
