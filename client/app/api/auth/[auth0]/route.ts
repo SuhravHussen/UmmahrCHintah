@@ -14,12 +14,11 @@ export const GET = handleAuth({
     const returnUrl = [
       `${process.env.AUTH0_ISSUER_BASE_URL}/v2/logout?`,
       `client_id=${process.env.AUTH0_CLIENT_ID}`,
-      `&returnTo=${process.env.AUTH0_BASE_URL}/api/auth/login`,
+      `&returnTo=${process.env.AUTH0_BASE_URL}`,
     ];
 
     const url = new URL(req.url);
     const returnTo = url.searchParams.get("returnTo");
-    console.log(`${returnUrl.join("")}/${returnTo}`);
     if (returnTo) {
       return {
         returnTo: `${returnUrl.join("")}/${returnTo}`,

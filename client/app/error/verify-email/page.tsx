@@ -71,7 +71,8 @@ export default function Page() {
               <Button
                 className="w-full group"
                 onClick={() => {
-                  window.location.href = "/api/auth/logout?";
+                  window.location.href =
+                    "/api/auth/logout?returnTo=api/auth/login";
                 }}
               >
                 Continue to Login
