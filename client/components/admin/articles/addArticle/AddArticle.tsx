@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/common/DatePicker";
 import { SearchableSelect } from "@/components/common/SearchableSelect";
 import ArticlePage from "@/components/common/article/ArticlePage";
-import KeywordSelector from "../../common/KeywordSelector";
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import htmlToRawString from "@/lib/htmlToRawString";
@@ -15,6 +15,7 @@ import { IAuthor } from "@/interfaces/Author.interface";
 import useAsync from "@/hooks/useAsync";
 import { addArticle } from "@/actions/addArticle";
 import getToken from "@/actions/getAccessToken";
+import KeywordSelector from "@/components/common/KeywordSelector";
 
 export default function AddArticle() {
   const [content, setContent] = useState("");
@@ -83,9 +84,8 @@ export default function AddArticle() {
 
   // reset states
   const resetStates = () => {
-    setContent("");
-    setTitle("");
-    setDate(new Date());
+    setContent(" ");
+    setTitle(" ");
     setOriginalPostLink("");
   };
 
@@ -159,10 +159,12 @@ export default function AddArticle() {
       <form className="mt-6" onSubmit={handleAddArticle}>
         <div className="flex flex-col gap-4">
           <Input
+            value={title}
             placeholder="Title..."
             onChange={(e) => setTitle(e.target.value)}
           />
           <Input
+            value={originalPostLink}
             placeholder="Original Post Link..."
             onChange={(e) => setOriginalPostLink(e.target.value)}
           />
@@ -177,7 +179,10 @@ export default function AddArticle() {
           <KeywordSelector keywords={keywords} setKeywords={setKeywords} />
         </div>
 
-        <RichTextEditor onChange={(html) => setContent(html)} />
+        <RichTextEditor
+          content={content}
+          onChange={(html) => setContent(html)}
+        />
 
         <Button disabled={loading} type="submit" className="w-full my-6">
           {!loading ? "Add Article" : "Loading..."}

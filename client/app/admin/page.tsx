@@ -3,18 +3,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Dashboard from "@/components/admin/dashboard/Dashboard";
 import Articles from "@/components/admin/articles/Articles";
-import AddArticle from "@/components/admin/addArticle/AddArticle";
+
 import Authors from "@/components/admin/auhtors/Authors";
 import Users from "@/components/admin/users/Users";
+import ArticleManagement from "@/components/admin/articles";
 
 export default function Page() {
   return (
     <div className="mt-16 mb-6">
       <Tabs defaultValue="Dashboard">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="Dashboard">Dashboard</TabsTrigger>
           <TabsTrigger value="Articles">Articles</TabsTrigger>
-          <TabsTrigger value="addArticle">Add Article</TabsTrigger>
+
           <TabsTrigger value="authors">Authors</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
@@ -22,11 +23,9 @@ export default function Page() {
           <Dashboard />
         </TabsContent>
         <TabsContent value="Articles">
-          <Articles />
+          <ArticleManagement />
         </TabsContent>
-        <TabsContent value="addArticle">
-          <AddArticle />
-        </TabsContent>
+
         <TabsContent value="authors">
           <Authors />
         </TabsContent>
