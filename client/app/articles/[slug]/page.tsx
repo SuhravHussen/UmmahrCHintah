@@ -5,6 +5,7 @@ import ArticlePage from "@/components/common/article/ArticlePage";
 import RelatedArticles from "@/components/common/article/RelatedArticles";
 import { IArticle } from "@/interfaces/Article.interface";
 import { Suspense } from "react";
+import HeadingImage from "../../../public/heading.png";
 
 export async function generateMetadata({
   searchParams,
@@ -19,7 +20,6 @@ export async function generateMetadata({
 
   const blog = data.data as IArticle;
 
-  // return a dynamic title
   return {
     title: blog.title,
     description: blog.content.text.substring(0, 29) + "...",
@@ -32,6 +32,15 @@ export async function generateMetadata({
       type: "website",
       publishedTime: new Date(blog.dateWritten),
       authors: [blog.author.name],
+      images: [
+        {
+          url: HeadingImage,
+          width: 800,
+          height: 600,
+          alt: blog.title,
+          type: "image/png",
+        },
+      ],
     },
     robots: {
       index: true,
@@ -50,6 +59,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: blog.title,
       description: blog.content.text.substring(0, 29) + "...",
+      images: [HeadingImage],
     },
     category: "islam",
   };
