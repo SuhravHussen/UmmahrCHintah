@@ -1,7 +1,6 @@
 function convertToLocalBangladeshTime(isoDate: string): string {
   // Create a new Date object from the ISO date string
   const date = new Date(isoDate);
-  let localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
   // Define options for formatting the date
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
