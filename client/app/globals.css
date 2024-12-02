@@ -48,7 +48,6 @@ body {
   .blog-content mark {
     background-color: #d4edda;
     color: #155724;
-    padding: 4px;
     border-radius: 5%; /* Dark green text */
   }
 
@@ -91,6 +90,12 @@ body {
   }
   a:hover {
     text-decoration-line: none !important;
+  }
+
+  .highlight {
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 5%;
   }
 }
 

@@ -13,9 +13,19 @@ import Link from "next/link";
 import { GiFeather } from "react-icons/gi";
 import { IoMdBook } from "react-icons/io";
 
-export default function ArticleCard({ article }: { article: IArticle }) {
+export default function ArticleCard({
+  article,
+  query,
+}: {
+  article: IArticle;
+  query?: string;
+}) {
   return (
-    <Link href={`/articles/${convertToSlug(article.title)}?id=${article.id}`}>
+    <Link
+      href={`/articles/${convertToSlug(article.title)}?id=${article.id}${
+        query ? `&query=${query}` : ""
+      }`}
+    >
       <Card className="cursor-pointer hover:bg-card-hover">
         <CardHeader>
           <CardTitle className="truncate py-2">{article.title}</CardTitle>

@@ -28,7 +28,7 @@ export default function ArticlePage({
 }) {
   return (
     <>
-      <article className="mt-10">
+      <article className="mt-10" id="article">
         {/* <Card className="p-2 md:p-4"> */}
         <h1
           className={`text-center line-clamp-3 ${secondaryFont.className} text-2xl md:text-3xl`}

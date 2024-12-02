@@ -6,6 +6,10 @@ import RelatedArticles from "@/components/common/article/RelatedArticles";
 import { IArticle } from "@/interfaces/Article.interface";
 import { Suspense } from "react";
 import HeadingImage from "../../../public/heading.png";
+import highlightQueryMatches from "@/lib/highlightQueryMatches";
+
+//@ts-ignore
+import { findAll } from "highlight-words-core";
 
 export async function generateMetadata({
   searchParams,
@@ -34,7 +38,7 @@ export async function generateMetadata({
       authors: [blog.author.name],
       images: [
         {
-          url: HeadingImage,
+          url: "../../../public/heading.png",
           width: 800,
           height: 600,
           alt: blog.title,
@@ -70,6 +74,7 @@ export default async function page({
 }: {
   searchParams: {
     id: string | undefined;
+    query: string | undefined;
   };
 }) {
   const ArticlesLoader = () => {
@@ -95,6 +100,29 @@ export default async function page({
   const data = await getSingleArticle(id);
   const blog = data.data as IArticle;
 
+  let content = blog.content.richText;
+
+  if (searchParams.query) {
+    const chunks = findAll({
+      caseSensitive: false,
+      searchWords: [searchParams.query],
+      textToHighlight: content,
+    });
+
+    console.log(content.slice(3, 6));
+    content = chunks
+      .map((chunk: any) => {
+        const { end, highlight, start } = chunk;
+        const text = content.substr(start, end - start);
+        if (highlight) {
+          return `<span class="highlight">${text}</span>`;
+        } else {
+          return text;
+        }
+      })
+      .join("");
+  }
+
   if (!blog || Object.keys(blog).length === 0) {
     return (
       <div className="flex justify-center items-center p-10 min-h-[80vh]">
@@ -107,7 +135,7 @@ export default async function page({
     <>
       <ArticlePage
         title={blog.title}
-        richText={blog.content.richText}
+        richText={content}
         dateWritten={blog.dateWritten}
         author={blog.author.name}
         keywords={blog.keywords}

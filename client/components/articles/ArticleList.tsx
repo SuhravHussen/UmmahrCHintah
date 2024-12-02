@@ -18,7 +18,7 @@ export default async function ArticleList({
     <div className="flex flex-col gap-4">
       {data.data.length > 0 &&
         data.data.map((article) => (
-          <ArticleCard key={article.id} article={article} />
+          <ArticleCard query={query} key={article.id} article={article} />
         ))}
       {data.data.length === 0 && (
         <p className="text-center py-12">
