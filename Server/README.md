@@ -66,3 +66,7 @@ Follow these steps to set up the project locally.
 ## Postman Collection
 
 [Ummar Chintah Postman Collection](https://gold-star-209210.postman.co/workspace/Ummar-Chintah~9bbf4078-d69e-4ebd-bc8e-ba5c358c5264/collection/16340384-89f102ad-abdf-46a3-908d-65624c6a6873?action=share&creator=16340384)
+
+## Documentation
+
+[Ummar Chintah Documentation](https://app.swaggerhub.com/apis/UmmarChintah/UmmarChintahApi/1.0.0)
