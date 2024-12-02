@@ -15,7 +15,6 @@ export class AuthorService {
     this.prisma = new PrismaClient();
   }
 
-  // Get all authors with pagination
   async getAllAuthors(
     page: number = 1,
     limit: number = 10,
@@ -29,6 +28,7 @@ export class AuthorService {
       const authors = await this.prisma.author.findMany({
         skip: offset,
         take: limit,
+        orderBy: { name: 'asc' },
       });
 
       // Count total authors for pagination
