@@ -105,7 +105,7 @@ export default async function page({
   if (searchParams.query) {
     const chunks = findAll({
       caseSensitive: false,
-      searchWords: [searchParams.query],
+      searchWords: searchParams.query.split(" "),
       textToHighlight: content,
     });
 
