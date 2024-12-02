@@ -4,7 +4,6 @@ async function getManagementToken(): Promise<string> {
     expiresAt: 0,
   };
 
-  let token = tokenCache.token;
   // Return cached token if still valid
   if (tokenCache.token && tokenCache.expiresAt > Date.now()) {
     return tokenCache.token;

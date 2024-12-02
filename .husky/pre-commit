@@ -1,5 +1,5 @@
 # Check if there are changes in the 'server' folder
-if git diff --cached --name-only | grep -q '^server/'; then
+if git diff --cached --name-only | grep -q '^Server/'; then
   cd server && npm run test && npm run lint
 else
   echo "No changes in server folder. Skipping tests and linting."
