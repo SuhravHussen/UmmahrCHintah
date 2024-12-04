@@ -24,6 +24,7 @@ describe('BlogsService', () => {
     }).compile();
 
     service = module.get<BlogsService>(BlogsService);
+    (service as any).prisma = prismaClientMock;
   });
 
   it('should create a blog', async () => {

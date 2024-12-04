@@ -6,13 +6,19 @@ import {
   GetAllBlogsResponse,
   GetSingleBlogResponse,
 } from '../../common/interfaces/blog.interface';
-import calculateReadingTime from '../../lib/calculateReadingTime';
+
 import { BlogSort } from '../../common/enums/blog.enum';
 import { UpdateBlogDto } from './dto/updateBlog.dto';
+import calculateReadingTime from '../../lib/calculateReadingTime';
 
 @Injectable()
 export class BlogsService {
-  constructor(private prisma: PrismaClient) {}
+  private prisma: PrismaClient;
+
+  // constructor(private prisma: PrismaClient) {}
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
 
   async createBlog(blogData: CreateBlogDto): Promise<Blog> {
     try {
