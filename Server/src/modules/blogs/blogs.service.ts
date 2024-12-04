@@ -6,7 +6,7 @@ import {
   GetAllBlogsResponse,
   GetSingleBlogResponse,
 } from '../../common/interfaces/blog.interface';
-import calculateReadingTime from '../../common/lib/calculateReadingTime';
+import calculateReadingTime from '../../lib/calculateReadingTime';
 import { BlogSort } from '../../common/enums/blog.enum';
 import { UpdateBlogDto } from './dto/updateBlog.dto';
 

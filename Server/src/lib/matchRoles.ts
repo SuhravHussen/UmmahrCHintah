@@ -1,4 +1,4 @@
-import { Role } from '../interfaces/roles.interface';
+import { Role } from '../common/interfaces/roles.interface';
 
 function matchRoles(decoratorRoles: Role[], dbRoles: string[]): boolean {
   // Normalize roles by trimming whitespace and converting to lowercase

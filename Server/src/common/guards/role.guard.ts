@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Roles } from '../decorators/roles.decorator';
-import getUserInfo from '../lib/getUserRole';
-import matchRoles from '../lib/matchRoles';
-import isEmptyObj from '../lib/isEmptyObj';
+import getUserInfo from '../../lib/getUserRole';
+import matchRoles from '../../lib/matchRoles';
+import isEmptyObj from '../../lib/isEmptyObj';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

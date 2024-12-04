@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import getManagementToken from 'src/lib/getAuth0ManagmentToken';
+import getManagementToken from '../../lib/getAuth0ManagmentToken';
 
 @Injectable()
 export class AuthService {
