@@ -12,11 +12,7 @@ import { UpdateBlogDto } from './dto/updateBlog.dto';
 
 @Injectable()
 export class BlogsService {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  constructor(private prisma: PrismaClient) {}
 
   async createBlog(blogData: CreateBlogDto): Promise<Blog> {
     try {
