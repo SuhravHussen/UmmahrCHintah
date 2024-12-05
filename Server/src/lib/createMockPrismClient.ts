@@ -9,6 +9,7 @@ const createMockPrismaClient = (): jest.Mocked<PrismaClient> => {
       update: jest.fn(),
       delete: jest.fn(),
       findFirst: jest.fn(),
+      count: jest.fn(),
       // Add other methods as needed
     },
     $executeRaw: jest.fn(),
