@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import useAsync from "@/hooks/useAsync";
 import { IAuthor } from "@/interfaces/Author.interface";
+import checkRole from "@/lib/roleCheck";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { FormEvent, useEffect, useState } from "react";
 
 export default function Page({
@@ -49,8 +51,22 @@ export default function Page({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { user } = useUser();
+
   const handleUpdateAuthor = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const isAdmin = checkRole(user, "admin");
+    const isModerator = checkRole(user, "moderator");
+    if (!isAdmin && !isModerator) {
+      toast({
+        title: "Sorry!",
+        description: "You don't have access to update article",
+        className: "mt-4",
+        variant: "destructive",
+      });
+      return;
+    }
     setUpdatingAuthor(true);
 
     try {

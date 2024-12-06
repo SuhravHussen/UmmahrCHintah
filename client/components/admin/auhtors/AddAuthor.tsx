@@ -6,6 +6,8 @@ import getToken from "@/actions/getAccessToken";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import checkRole from "@/lib/roleCheck";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { FormEvent, useState } from "react";
 export default function AddAuthor({
   refreshData,
@@ -13,9 +15,23 @@ export default function AddAuthor({
   refreshData: () => void;
 }) {
   const [addingAuthor, setAddingAuthor] = useState(false);
+  const { user } = useUser();
 
   const handleAddAuthor = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const isAdmin = checkRole(user, "admin");
+    const isModerator = checkRole(user, "moderator");
+    if (!isAdmin && !isModerator) {
+      toast({
+        title: "Sorry!",
+        description: "You don't have access to add author",
+        className: "mt-4",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setAddingAuthor(true);
 
     try {
@@ -58,7 +74,7 @@ export default function AddAuthor({
       // Get access token and add the author
       const { accessToken } = await getToken();
       const data = await addAuthor(body, accessToken);
-      console.log(data);
+
       // Check if the author was successfully added
       if (data.data && "id" in data.data) {
         toast({

@@ -35,9 +35,20 @@ export default function Layout({
     redirect("/");
   }
 
-  if (!hasDashboardAccess(user)) {
-    redirect("/");
-  }
+  // if (!hasDashboardAccess(user)) {
+  //   redirect("/");
+  // }
 
-  return <div>{children}</div>;
+  return (
+    <div>
+      {!hasDashboardAccess(user) && (
+        <div className="bg-red-100 p-2 rounded-md shadow-md mt-10 ">
+          <p className="text-sm font-semibold text-red-600">
+            As a guest you only have read access
+          </p>
+        </div>
+      )}
+      {children}
+    </div>
+  );
 }

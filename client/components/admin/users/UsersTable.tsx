@@ -175,7 +175,7 @@ export const columns: ColumnDef<IDetailedUser>[] = [
           if (!hasAccess) {
             toast({
               title: "Sorry!",
-              description: "You don't have access to delete user",
+              description: "You don't have access to add role",
               className: "mt-4",
               variant: "destructive",
             });
@@ -258,7 +258,7 @@ export const columns: ColumnDef<IDetailedUser>[] = [
           if (!hasAccess) {
             toast({
               title: "Sorry!",
-              description: "You don't have access to delete user",
+              description: "You don't have access to delete role",
               className: "mt-4",
               variant: "destructive",
             });
@@ -495,7 +495,7 @@ export function UsersTable({
       }
 
       const response = await getRoles(token.accessToken);
-      setRoles(response);
+      setRoles(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Error fetching roles:", error);
     }
@@ -505,9 +505,9 @@ export function UsersTable({
     setData(users);
   }, [users]);
 
-  React.useEffect(() => {
-    fetchRoles();
-  }, []);
+  // React.useEffect(() => {
+  //   fetchRoles();
+  // }, []);
 
   const table = useReactTable({
     data: data,

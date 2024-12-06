@@ -23,17 +23,16 @@ export function ProfileDropDown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <p className="cursor-pointer">Profile</p>
+          </DropdownMenuItem> */}
+
+          <DropdownMenuItem>
+            <Link href={"/admin"} className="cursor-pointer">
+              Dashboard
+            </Link>
           </DropdownMenuItem>
 
-          {hasDashboardAccess(user) && (
-            <DropdownMenuItem>
-              <Link href={"/admin"} className="cursor-pointer">
-                Admin
-              </Link>
-            </DropdownMenuItem>
-          )}
           <DropdownMenuItem>
             <a href="/api/auth/logout">Logout</a>
           </DropdownMenuItem>

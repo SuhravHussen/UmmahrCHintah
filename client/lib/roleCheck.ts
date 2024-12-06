@@ -4,6 +4,7 @@ const checkRole = (userObj = {}, role: string) => {
   if (Object.keys(userObj).length === 0) return false;
   const typedUser = userObj as IUser;
   const doesRolesExist = typedUser["/roles"];
+  if (!doesRolesExist) return false;
   return doesRolesExist.includes(role);
 };
 

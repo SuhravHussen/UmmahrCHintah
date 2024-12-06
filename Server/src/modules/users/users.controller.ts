@@ -23,9 +23,7 @@ import { RolesGuard } from '../../common/guards/role.guard';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Roles(['moderator'])
   @UseGuards(AuthGuard)
-  @UseGuards(RolesGuard)
   @Get()
   async getUsers(
     @Query('page') page = 0,
@@ -67,9 +65,7 @@ export class UsersController {
     }
   }
 
-  @Roles(['moderator'])
   @UseGuards(AuthGuard)
-  @UseGuards(RolesGuard)
   @Get('roles')
   async getAllRoles(): Promise<UserRole[]> {
     try {

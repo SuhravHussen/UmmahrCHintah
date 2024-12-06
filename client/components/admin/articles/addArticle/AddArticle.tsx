@@ -16,6 +16,8 @@ import useAsync from "@/hooks/useAsync";
 import { addArticle } from "@/actions/addArticle";
 import getToken from "@/actions/getAccessToken";
 import KeywordSelector from "@/components/common/KeywordSelector";
+import checkRole from "@/lib/roleCheck";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function AddArticle() {
   const [content, setContent] = useState("");
@@ -88,9 +90,22 @@ export default function AddArticle() {
     setTitle(" ");
     setOriginalPostLink("");
   };
+  const { user } = useUser();
 
   const handleAddArticle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const isAdmin = checkRole(user, "admin");
+    const isModerator = checkRole(user, "moderator");
+    if (!isAdmin && !isModerator) {
+      toast({
+        title: "Sorry!",
+        description: "You don't have access to add article",
+        className: "mt-4",
+        variant: "destructive",
+      });
+      return;
+    }
 
     if (!validateFields()) return;
 
