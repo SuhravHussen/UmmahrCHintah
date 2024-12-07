@@ -1,27 +1,13 @@
 import { PrismaClient } from '@prisma/client';
+import { mockDeep, mockReset } from 'jest-mock-extended';
 
 const createMockPrismaClient = (): jest.Mocked<PrismaClient> => {
-  return {
-    blog: {
-      create: jest.fn(),
-      findUnique: jest.fn(),
-      findMany: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-      findFirst: jest.fn(),
-      count: jest.fn(),
-      // Add other methods as needed
-    },
-    $executeRaw: jest.fn(),
-    $executeRawUnsafe: jest.fn(),
-    $queryRaw: jest.fn(),
-    $queryRawUnsafe: jest.fn(),
-    $on: jest.fn(),
-    $use: jest.fn(),
-    $connect: jest.fn(),
-    $disconnect: jest.fn(),
-    $transaction: jest.fn(),
-  } as unknown as jest.Mocked<PrismaClient>;
+  const mockPrismaClient = mockDeep<PrismaClient>();
+
+  // Optional: Reset mocks before each test
+  mockReset(mockPrismaClient);
+
+  return mockPrismaClient;
 };
 
 export default createMockPrismaClient;
