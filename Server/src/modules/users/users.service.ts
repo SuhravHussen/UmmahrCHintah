@@ -15,7 +15,6 @@ export class UsersService {
   ): Promise<getAllUsersResponse> {
     try {
       const token = await getManagementToken();
-
       let users = [];
       let totalUsers = 0;
 

@@ -10,7 +10,7 @@ export class DashboardController {
     try {
       return await this.dashboardService.getTotalCounts();
     } catch (e) {
-      new HttpException(
+      throw new HttpException(
         {
           clientMessage: 'sorry, something wrong in getting the total numbers',
           devMessage: e.message || 'something went wrong',
