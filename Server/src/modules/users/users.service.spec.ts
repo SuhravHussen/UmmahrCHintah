@@ -57,7 +57,7 @@ describe('UsersService', () => {
         });
 
       const result = await service.getUsers(0, 10);
-      console.log(result);
+
       expect(result).toEqual({
         data: [{ ...mockUser, roles: mockRolesResponse }],
         pagination: {
