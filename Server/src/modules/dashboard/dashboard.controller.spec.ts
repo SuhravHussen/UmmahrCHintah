@@ -9,6 +9,7 @@ describe('DashboardController', () => {
   beforeEach(async () => {
     const mockDashboardService = {
       getTotalCounts: jest.fn(),
+      getBlogsPerDate: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -40,6 +41,26 @@ describe('DashboardController', () => {
 
       expect(result).toEqual(expectedResponse);
       expect(service.getTotalCounts).toHaveBeenCalled();
+    });
+  });
+
+  describe('getBlogsPerDate', () => {
+    it('should return total counts successfully', async () => {
+      const expectedResponse = {
+        data: [
+          { date: new Date(), weight: 10 },
+          { date: new Date(), weight: 5 },
+        ],
+      };
+
+      jest
+        .spyOn(service, 'getBlogsPerDate')
+        .mockResolvedValue(expectedResponse);
+
+      const result = await controller.getBlogsPerDate(new Date());
+
+      expect(result).toEqual(expectedResponse);
+      expect(service.getBlogsPerDate).toHaveBeenCalledWith(new Date());
     });
   });
 });
