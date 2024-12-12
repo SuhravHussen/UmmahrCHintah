@@ -40,9 +40,9 @@ export default function Header() {
         {user ? (
           <ProfileDropDown />
         ) : (
-          <Link href="/api/auth/login" className={`hover:link-active`}>
+          <a href="/api/auth/login" className={`hover:link-active`}>
             Login
-          </Link>
+          </a>
         )}
       </div>
 
