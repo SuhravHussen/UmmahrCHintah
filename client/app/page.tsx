@@ -23,12 +23,12 @@ export default function Home() {
         পারেন।
       </p>
 
-
-
       <Separator />
+
       <Suspense fallback={<PopularArticleSkeleton />}>
         <PopularArticles />
       </Suspense>
+
       <Suspense fallback={<RecentArticleSkeleton />}>
         <RecentArticles />
       </Suspense>
